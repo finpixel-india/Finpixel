@@ -160,10 +160,10 @@ function Reveal({ children, className = '', delay = 0, zoom = false }: { childre
   return (
     <motion.div
       className={className}
-      initial={lightweightMotion ? false : { opacity: 0, y: 10, scale: zoom ? .985 : 1 }}
+      initial={lightweightMotion ? false : { opacity: 0, y: 7, scale: zoom ? .992 : 1 }}
       whileInView={lightweightMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.58, delay, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.32, delay: delay * 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
@@ -1075,10 +1075,10 @@ function AudioPlayerBar({
     <motion.aside
       className="floating-audio-bar"
       aria-label="Brand Audio Player"
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 25, scale: 0.95 }}
-      transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -16 }}
+      transition={{ type: 'spring', stiffness: 340, damping: 30 }}
     >
       <div className="audio-bar-wave" aria-hidden="true">
         <span className={`wave-bar ${playing ? 'wave-bar--animating' : ''}`} style={{ animationDelay: '0s' }} />

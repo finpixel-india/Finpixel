@@ -29,7 +29,7 @@ button { color: inherit; }
 
 .site-shell { min-height: 100vh; overflow: clip; background: radial-gradient(circle at 12% 4%, rgba(224,216,244,.14), transparent 24%), radial-gradient(circle at 92% 24%, rgba(228,221,246,.1), transparent 22%), #ffffff; }
 .container { width: min(1280px, calc(100% - 64px)); margin: 0 auto; }
-.section { padding: 124px 0; }
+.section { padding: 72px 0; }
 .about-section, .service-section, .comparison-section, .pricing-section, .industries-section, .code-showcase-section, .promise-section, .process-section, .pages-section, .cta-section, .footer { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 :is(.about-principle, .about-capability, .growth-card, .comparison-card, .industry-card, .promise-card, .page-flashcard, .pricing-card, .visual-surface, .contact-options-grid > a, .success-next) { -webkit-backdrop-filter: blur(8px) saturate(125%); backdrop-filter: blur(8px) saturate(125%); }
 
@@ -2784,26 +2784,27 @@ html.lenis, html.lenis body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   FLOATING AUDIO MINI-PLAYER BAR
+   FLOATING AUDIO MINI-PLAYER BAR — top strip below navbar
    ═══════════════════════════════════════════════════════════════════ */
 
 .floating-audio-bar {
   position: fixed;
-  z-index: 88;
-  bottom: 24px;
+  z-index: 59; /* just below the navbar (z-index: 60) */
+  top: 68px;   /* sits immediately below the nav pill */
   left: 50%;
   transform: translateX(-50%);
-  width: min(460px, calc(100% - 36px));
-  padding: 11px 16px;
+  width: min(760px, calc(100% - 32px));
+  padding: 8px 16px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  border-radius: 999px;
+  gap: 12px;
+  border-radius: 0 0 18px 18px;
   border: 1px solid rgba(255, 255, 255, 0.92);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(246, 242, 233, 0.78));
+  border-top: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(246, 242, 233, 0.88));
   -webkit-backdrop-filter: blur(24px) saturate(150%);
   backdrop-filter: blur(24px) saturate(150%);
-  box-shadow: 0 20px 50px rgba(45, 34, 18, 0.12), 0 4px 14px rgba(0, 0, 0, 0.04), inset 0 1px 0 #ffffff;
+  box-shadow: 0 12px 32px rgba(45, 34, 18, 0.10), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 -1px 0 rgba(202,167,102,0.14);
   user-select: none;
   -webkit-user-select: none;
 }
@@ -2812,13 +2813,14 @@ html.lenis, html.lenis body {
   display: flex;
   align-items: center;
   gap: 3px;
-  height: 18px;
+  height: 16px;
   padding: 0 2px;
+  flex: 0 0 auto;
 }
 
 .wave-bar {
   width: 3px;
-  height: 6px;
+  height: 5px;
   border-radius: 3px;
   background: #c5a15b;
   transition: height 0.25s ease;
@@ -2829,15 +2831,9 @@ html.lenis, html.lenis body {
 }
 
 @keyframes waveBarBounce {
-  0% {
-    height: 4px;
-  }
-  50% {
-    height: 18px;
-  }
-  100% {
-    height: 7px;
-  }
+  0%   { height: 3px; }
+  50%  { height: 14px; }
+  100% { height: 5px; }
 }
 
 .audio-bar-info {
@@ -2845,7 +2841,7 @@ html.lenis, html.lenis body {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .audio-bar-title-wrap {
@@ -2855,7 +2851,7 @@ html.lenis, html.lenis body {
 }
 
 .audio-bar-title {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--ink);
   white-space: nowrap;
@@ -2865,11 +2861,11 @@ html.lenis, html.lenis body {
 }
 
 .audio-bar-pill {
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 750;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 2px 6px;
+  padding: 1.5px 5px;
   border-radius: 999px;
   color: #8c6e33;
   background: rgba(189, 151, 83, 0.12);
@@ -2879,8 +2875,8 @@ html.lenis, html.lenis body {
 .audio-bar-time {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 9.5px;
+  gap: 7px;
+  font-size: 9px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   color: var(--muted);
 }
@@ -2888,7 +2884,7 @@ html.lenis, html.lenis body {
 .audio-bar-track {
   position: relative;
   flex: 1;
-  height: 5px;
+  height: 4px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.08);
   cursor: pointer;
@@ -2905,8 +2901,8 @@ html.lenis, html.lenis body {
 .audio-bar-thumb {
   position: absolute;
   top: 50%;
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #ffffff;
   border: 1.5px solid #c5a15b;
@@ -2919,12 +2915,13 @@ html.lenis, html.lenis body {
   display: flex;
   align-items: center;
   gap: 5px;
+  flex: 0 0 auto;
 }
 
 .audio-bar-btn {
   position: relative;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   padding: 0;
   display: grid;
   place-items: center;
@@ -2943,22 +2940,22 @@ html.lenis, html.lenis body {
 }
 
 .audio-bar-btn--play {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   background: linear-gradient(135deg, #dfc38d, #c5a15b);
   color: #1a1610;
   border-color: rgba(189, 151, 83, 0.4);
-  box-shadow: 0 4px 12px rgba(189, 151, 83, 0.35);
+  box-shadow: 0 3px 10px rgba(189, 151, 83, 0.3);
 }
 
 .audio-bar-btn--play:hover {
   color: #000000;
   transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(189, 151, 83, 0.5);
+  box-shadow: 0 5px 14px rgba(189, 151, 83, 0.48);
 }
 
 .audio-bar-btn--close {
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
 .audio-bar-btn--close:hover {
@@ -2978,9 +2975,9 @@ html.lenis, html.lenis body {
 
 /* Dark mode audio bar */
 html[data-theme="dark"] .floating-audio-bar {
-  border-color: rgba(224, 196, 142, 0.2);
-  background: linear-gradient(135deg, rgba(16, 20, 26, 0.9), rgba(8, 10, 14, 0.93));
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 25px rgba(223, 195, 141, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-color: rgba(224, 196, 142, 0.15);
+  background: linear-gradient(180deg, rgba(12, 14, 18, 0.96), rgba(8, 10, 14, 0.93));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 -1px 0 rgba(223, 195, 141, 0.1);
 }
 
 html[data-theme="dark"] .audio-bar-title {
@@ -3021,21 +3018,25 @@ html[data-theme="dark"] .audio-bar-btn--play {
 
 html[data-theme="dark"] .audio-bar-btn--play:hover {
   color: #000000;
-  box-shadow: 0 6px 18px rgba(223, 195, 141, 0.4);
+  box-shadow: 0 5px 16px rgba(223, 195, 141, 0.38);
 }
 
+/* Mobile: audio bar matches nav pill width, sits flush below nav */
 @media (max-width: 600px) {
   .floating-audio-bar {
-    bottom: 74px;
+    top: 68px;
     width: calc(100% - 24px);
-    padding: 10px 14px;
-    gap: 10px;
+    padding: 7px 12px;
+    gap: 9px;
+    border-radius: 0 0 14px 14px;
   }
   .audio-bar-title {
-    max-width: 130px;
+    max-width: 110px;
+    font-size: 10px;
+  }
+  .audio-bar-pill {
+    display: none; /* hide pill on small screens to save space */
   }
 }
-
-
 
 
