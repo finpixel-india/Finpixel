@@ -1,5 +1,6 @@
 import { FormEvent, MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import Lenis from 'lenis';
 import { DEFAULT_CONTENT } from './defaultContent';
 import {
   ArrowLeft,
@@ -30,6 +31,8 @@ import {
   Moon,
   MousePointer2,
   PackageCheck,
+  Pause,
+  Play,
   Rocket,
   RotateCcw,
   Server,
@@ -1009,6 +1012,138 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
   );
 }
 
+function AudioPlayerBar({
+  audioRef,
+  playing,
+  onToggle,
+  onClose,
+}: {
+  audioRef: React.RefObject<HTMLAudioElement | null>;
+  playing: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+}) {
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const onLoadedMetadata = () => {
+      if (audio.duration && !isNaN(audio.duration)) setDuration(audio.duration);
+    };
+
+    audio.addEventListener('timeupdate', onTimeUpdate);
+    audio.addEventListener('loadedmetadata', onLoadedMetadata);
+
+    if (audio.duration && !isNaN(audio.duration)) setDuration(audio.duration);
+    if (audio.currentTime) setCurrentTime(audio.currentTime);
+
+    return () => {
+      audio.removeEventListener('timeupdate', onTimeUpdate);
+      audio.removeEventListener('loadedmetadata', onLoadedMetadata);
+    };
+  }, [audioRef]);
+
+  const handleSeek = (e: ReactMouseEvent<HTMLDivElement>) => {
+    const audio = audioRef.current;
+    if (!audio || !duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = percent * duration;
+    setCurrentTime(audio.currentTime);
+  };
+
+  const handleRewind10 = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = Math.max(0, audio.currentTime - 10);
+  };
+
+  const formatTime = (secs: number) => {
+    if (!secs || isNaN(secs)) return '0:00';
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+  return (
+    <motion.aside
+      className="floating-audio-bar"
+      aria-label="Brand Audio Player"
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 25, scale: 0.95 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+    >
+      <div className="audio-bar-wave" aria-hidden="true">
+        <span className={`wave-bar ${playing ? 'wave-bar--animating' : ''}`} style={{ animationDelay: '0s' }} />
+        <span className={`wave-bar ${playing ? 'wave-bar--animating' : ''}`} style={{ animationDelay: '0.2s' }} />
+        <span className={`wave-bar ${playing ? 'wave-bar--animating' : ''}`} style={{ animationDelay: '0.4s' }} />
+      </div>
+
+      <div className="audio-bar-info">
+        <div className="audio-bar-title-wrap">
+          <strong className="audio-bar-title">Finpixel Brand Story</strong>
+          <span className="audio-bar-pill">Audio Tour</span>
+        </div>
+        <div className="audio-bar-time">
+          <span>{formatTime(currentTime)}</span>
+          <div
+            className="audio-bar-track"
+            onClick={handleSeek}
+            role="slider"
+            aria-valuenow={Math.round(progress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            tabIndex={0}
+          >
+            <div className="audio-bar-progress" style={{ width: `${progress}%` }} />
+            <div className="audio-bar-thumb" style={{ left: `${progress}%` }} />
+          </div>
+          <span>{formatTime(duration || 70)}</span>
+        </div>
+      </div>
+
+      <div className="audio-bar-actions">
+        <button
+          type="button"
+          onClick={handleRewind10}
+          className="audio-bar-btn"
+          aria-label="Rewind 10 seconds"
+          title="Rewind 10s"
+        >
+          <RotateCcw size={13} />
+          <small className="rewind-10-num">10</small>
+        </button>
+
+        <button
+          type="button"
+          onClick={onToggle}
+          className="audio-bar-btn audio-bar-btn--play"
+          aria-label={playing ? 'Pause audio' : 'Play audio'}
+        >
+          {playing ? <Pause size={15} /> : <Play size={15} style={{ marginLeft: 2 }} />}
+        </button>
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="audio-bar-btn audio-bar-btn--close"
+          aria-label="Close audio player"
+          title="Close player"
+        >
+          <X size={13} />
+        </button>
+      </div>
+    </motion.aside>
+  );
+}
+
 export default function App() {
   const reduceMotion = useReducedMotion();
   const lightweightMotion = reduceMotion || navigator.hardwareConcurrency <= 4 || window.matchMedia('(max-width: 820px), (pointer: coarse), (update: slow)').matches;
@@ -1026,6 +1161,7 @@ export default function App() {
   const [modal, setModal] = useState<ModalState>({ open: false, interest: '' });
   const [snowEnabled, setSnowEnabled] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const [audioBarOpen, setAudioBarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const heroProductRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -1125,6 +1261,7 @@ export default function App() {
     }
 
     try {
+      setAudioBarOpen(true);
       if (!audio.src || !audio.src.includes('brand_explanation.mp3')) {
         audio.src = '/brand_explanation.mp3';
       }
@@ -1153,7 +1290,10 @@ export default function App() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const onPlay = () => setAudioPlaying(true);
+    const onPlay = () => {
+      setAudioPlaying(true);
+      setAudioBarOpen(true);
+    };
     const onPause = () => setAudioPlaying(false);
     const onEnded = () => {
       setAudioPlaying(false);
@@ -1172,6 +1312,45 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1.2,
+    });
+
+    let frameId: number;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      frameId = requestAnimationFrame(raf);
+    };
+    frameId = requestAnimationFrame(raf);
+
+    (window as any).__lenis = lenis;
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      lenis.destroy();
+      delete (window as any).__lenis;
+    };
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    const lenis = (window as any).__lenis;
+    if (!lenis) return;
+    if (modal.open || chatOpen || menuOpen) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  }, [modal.open, chatOpen, menuOpen]);
+
   const navigateToSection = (event: ReactMouseEvent<HTMLAnchorElement>, href: string) => {
     setMenuOpen(false);
     if (!href.startsWith('#')) return;
@@ -1179,11 +1358,24 @@ export default function App() {
     if (!target) return;
     event.preventDefault();
     document.documentElement.classList.add('force-layout');
-    window.requestAnimationFrame(() => {
-      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-      window.history.replaceState(null, '', href);
-      window.setTimeout(() => document.documentElement.classList.remove('force-layout'), 850);
-    });
+
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.scrollTo(target, {
+        offset: -40,
+        duration: 1.2,
+        onComplete: () => {
+          document.documentElement.classList.remove('force-layout');
+          window.history.replaceState(null, '', href);
+        },
+      });
+    } else {
+      window.requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        window.history.replaceState(null, '', href);
+        window.setTimeout(() => document.documentElement.classList.remove('force-layout'), 850);
+      });
+    }
   };
 
   const openDemo = (interest = '') => {
@@ -1803,6 +1995,17 @@ export default function App() {
       />
 
       <AnimatePresence>{chatOpen && chatbot && <AiChatbot config={chatbot} onClose={() => setChatOpen(false)} />}</AnimatePresence>
+
+      <AnimatePresence>
+        {audioBarOpen && (
+          <AudioPlayerBar
+            audioRef={audioRef}
+            playing={audioPlaying}
+            onToggle={() => { void toggleAudioDescription(); }}
+            onClose={() => setAudioBarOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
       <LeadModal state={modal} onClose={() => setModal({ open: false, interest: '' })} formContent={leadForm} whatsappLink={whatsappLink} onSubmitted={() => { void fetchContent(); }} />
     </motion.div>
