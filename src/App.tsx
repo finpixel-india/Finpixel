@@ -647,24 +647,24 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
   const detailedWhatsAppLink = useMemo(() => {
     if (!submittedLead) return whatsappLink;
     const formattedMessage = [
-      '🎯 *FREE DEMO REQUEST — FINPIXEL INDIA*',
-      '━━━━━━━━━━━━━━━━━━━━━━━━',
+      '👋 *Hello Finpixel India Team!*',
       '',
-      `📋 *Reference No:* ${reference || 'FP-NEW'}`,
+      'I have just submitted an enquiry on your website. Here are my details:',
+      '',
+      `📋 *Reference ID:* ${reference || 'FP-NEW'}`,
       `👤 *Full Name:* ${submittedLead.name}`,
       `📱 *Phone/WhatsApp:* ${submittedLead.phone}`,
       `📧 *Email:* ${submittedLead.email || 'Not provided'}`,
       `🏢 *Business Type:* ${submittedLead.business_type}`,
       '',
-      '━━━━━━━━━━━━━━━━━━━━━━━━',
-      '💬 *Project Requirements & Goals:*',
-      submittedLead.message || 'I would like to discuss a custom website for my business and learn more about the free demo.',
+      '💬 *Project Requirements & Description:*',
+      submittedLead.message ? `"${submittedLead.message}"` : 'I would like to discuss a custom website for my business and explore the free demo.',
       '',
       '━━━━━━━━━━━━━━━━━━━━━━━━',
-      '✅ *Submitted via:* finpixelindia.pages.dev',
-      '⏰ *Submitted at:* ' + new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }),
+      '🌐 *Origin:* Finpixel India Official (finpixelindia.pages.dev)',
+      '⏰ *Time:* ' + new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }),
       '',
-      '_Looking forward to seeing the free demo! Please let me know the next steps._ 🚀',
+      'Please let me know the next steps. Looking forward to connecting with you! 🚀'
     ].join('\n');
     return `https://wa.me/917004176367?text=${encodeURIComponent(formattedMessage)}`;
   }, [submittedLead, reference, whatsappLink]);
@@ -677,33 +677,33 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-          onMouseDown={onClose}
+          transition={{ duration: 0.25 }}
+          onClick={onClose}
         >
           <motion.div
             className="lead-modal"
             role="dialog"
             aria-modal="true"
             aria-labelledby="lead-title"
-            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            initial={{ opacity: 0, y: 32, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 60, scale: 0.96 }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300, mass: 0.9 }}
-            onMouseDown={(e) => e.stopPropagation()}
+            exit={{ opacity: 0, y: 32, scale: 0.96 }}
+            transition={{ type: 'spring', damping: 28, stiffness: 320, mass: 0.8 }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="modal-glow" />
-            <div className="modal-drag-handle" aria-hidden="true" />
-            <button className="modal-close" onClick={onClose} aria-label="Close form"><X size={16} /></button>
+            <button className="modal-close" onClick={onClose} aria-label="Close dialog" type="button">
+              <X size={18} />
+            </button>
 
             <AnimatePresence mode="wait">
               {status === 'success' ? (
                 <motion.div
                   key="success"
                   className="modal-success"
-                  initial={{ opacity: 0, x: 56, scale: 0.97 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  exit={{ opacity: 0, x: -40, scale: 0.97 }}
-                  transition={{ type: 'spring', damping: 28, stiffness: 300, mass: 0.85 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   role="status"
                   aria-live="polite"
                 >
@@ -720,109 +720,131 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
                         animate={{ scale: 1 }}
                         transition={{ type: 'spring', damping: 18, stiffness: 260, delay: 0.18 }}
                       >
-                        <CheckCircle2 size={32} strokeWidth={1.8} />
+                        <CheckCircle2 size={34} strokeWidth={2} />
                       </motion.div>
                     </motion.div>
-                    <motion.div className="success-header-text" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22, duration: 0.52, ease: [0.16, 1, 0.3, 1] }}>
-                      <Eyebrow>{formContent.successEyebrow || 'Enquiry Sent'}</Eyebrow>
-                      <h2 className="success-headline">{formContent.successTitle || 'Your request is in!'}</h2>
-                      <p className="success-msg">{message || "We've received your demo request and will get back to you within 24 hours."}</p>
-                    </motion.div>
+                    <div className="success-header-text">
+                      <Eyebrow>{formContent?.successEyebrow || 'Query Sent'}</Eyebrow>
+                      <h2 className="success-headline">Query Sent!</h2>
+                      <p className="success-msg">{message || "We've received your query and our team will get back to you within 24 hours."}</p>
+                    </div>
                   </div>
 
-                  <motion.div className="success-ref-card" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.48, ease: [0.16, 1, 0.3, 1] }}>
-                    <div className="success-ref-inner">
-                      <div className="success-ref-row">
-                        <span className="ref-label">{formContent.referenceLabel || 'Reference No.'}</span>
-                        <strong className="ref-code">{reference}</strong>
-                      </div>
-                      {submittedLead && (
-                        <div className="success-lead-pills">
-                          <div><span>Name</span><b>{submittedLead.name}</b></div>
-                          <div><span>Business</span><b>{submittedLead.business_type}</b></div>
-                        </div>
-                      )}
+                  <div className="success-ref-card">
+                    <div className="success-ref-row">
+                      <span className="ref-label">Reference ID</span>
+                      <strong className="ref-code">{reference || 'FP-REQUEST'}</strong>
                     </div>
-                  </motion.div>
-
-                  {formContent.successSteps && (
-                    <motion.div className="success-steps" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}>
-                      <p className="success-steps-label">{formContent.nextLabel || 'WHAT HAPPENS NEXT'}</p>
-                      <div className="success-steps-list">
-                        {formContent.successSteps.map((step: any, index: number) => (
-                          <div key={step.title} className="success-step">
-                            <div className="success-step-num">{index + 1}</div>
-                            <div className="success-step-content">
-                              <b>{step.title}</b>
-                              <em>{step.description}</em>
-                            </div>
-                          </div>
-                        ))}
+                    {submittedLead && (
+                      <div className="success-lead-pills">
+                        <div>
+                          <span>Client Name</span>
+                          <b>{submittedLead.name}</b>
+                        </div>
+                        <div>
+                          <span>WhatsApp</span>
+                          <b>{submittedLead.phone}</b>
+                        </div>
+                        <div>
+                          <span>Email</span>
+                          <b>{submittedLead.email || '—'}</b>
+                        </div>
+                        <div>
+                          <span>Business Type</span>
+                          <b>{submittedLead.business_type}</b>
+                        </div>
                       </div>
-                    </motion.div>
-                  )}
+                    )}
+                  </div>
 
-                  <motion.div className="success-cta-block" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.46, duration: 0.48, ease: [0.16, 1, 0.3, 1] }}>
+                  <div className="success-steps">
+                    <p className="success-steps-label">What Happens Next</p>
+                    <div className="success-steps-list">
+                      <div className="success-step">
+                        <div className="success-step-num">1</div>
+                        <div className="success-step-content">
+                          <b>Instant Verification</b>
+                          <em>Your enquiry details have been securely logged in our system.</em>
+                        </div>
+                      </div>
+                      <div className="success-step">
+                        <div className="success-step-num">2</div>
+                        <div className="success-step-content">
+                          <b>Direct WhatsApp Connect</b>
+                          <em>Chat with our team right away to share design preferences.</em>
+                        </div>
+                      </div>
+                      <div className="success-step">
+                        <div className="success-step-num">3</div>
+                        <div className="success-step-content">
+                          <b>Free Prototype in 48h</b>
+                          <em>Review your interactive prototype with zero upfront payment.</em>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="success-cta-block">
                     <a className="success-wa-button" href={detailedWhatsAppLink} target="_blank" rel="noreferrer">
-                      <span className="success-wa-icon"><WhatsAppIcon size={20} /></span>
+                      <span className="success-wa-icon"><WhatsAppIcon size={22} /></span>
                       <span className="success-wa-text">
-                        <b>{formContent.whatsappCta || 'Continue on WhatsApp'}</b>
-                        <small>Chat with us — your details are pre-filled</small>
+                        <b>Chat on WhatsApp</b>
+                        <small>Direct priority chat with pre-filled enquiry</small>
                       </span>
-                      <ArrowRight size={15} className="success-wa-arrow" />
+                      <ArrowRight size={17} className="success-wa-arrow" />
                     </a>
                     <button className="success-return-button" onClick={onClose} type="button">
-                      <ArrowLeft size={14} />
-                      <span>{formContent.done || 'Return to Website'}</span>
+                      <ArrowLeft size={16} />
+                      <span>Go Back to Website</span>
                     </button>
-                  </motion.div>
+                  </div>
 
-                  <motion.p className="success-footer-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.58 }}>
-                    <ShieldCheck size={12} />
-                    {formContent.whatsappNote || 'Your information is secure and will never be shared with third parties.'}
-                  </motion.p>
+                  <p className="success-footer-note">
+                    <ShieldCheck size={13} />
+                    <span>Your information is encrypted & 100% confidential. No spam ever.</span>
+                  </p>
                 </motion.div>
               ) : (
                 <motion.div
                   key="form"
-                  initial={{ opacity: 0, x: -24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -48, scale: 0.97 }}
-                  transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <div className="modal-form-header">
-                    <Eyebrow>{formContent.eyebrow}</Eyebrow>
-                    <h2 id="lead-title">{formContent.title}</h2>
-                    <p className="modal-intro">{formContent.subheadline}</p>
+                    <Eyebrow>{formContent?.eyebrow || 'Free Demo Request'}</Eyebrow>
+                    <h2 id="lead-title">{formContent?.title || "Let's Build Your Website"}</h2>
+                    <p className="modal-intro">{formContent?.subheadline || "Fill in your details and we'll have a first draft ready for you within 48 hours."}</p>
                   </div>
                   <form onSubmit={submit} noValidate>
                     <div className="form-grid">
                       <label>
-                        <span>{formContent.fields.name}</span>
-                        <input value={form.name} onChange={(e) => update('name', e.target.value)} placeholder={formContent.placeholders.name} autoFocus />
+                        <span>{formContent?.fields?.name || 'Your Name'}</span>
+                        <input value={form.name} onChange={(e) => update('name', e.target.value)} placeholder={formContent?.placeholders?.name || 'Ashish Singh'} autoFocus />
                         {fieldErrors.name && <small>{fieldErrors.name}</small>}
                       </label>
                       <label>
-                        <span>{formContent.fields.phone}</span>
-                        <input value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder={formContent.placeholders.phone} inputMode="tel" />
+                        <span>{formContent?.fields?.phone || 'WhatsApp Number'}</span>
+                        <input value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder={formContent?.placeholders?.phone || '+91 70041 76367'} inputMode="tel" />
                         {fieldErrors.phone && <small>{fieldErrors.phone}</small>}
                       </label>
                       <label>
-                        <span>{formContent.fields.email}</span>
-                        <input value={form.email} onChange={(e) => update('email', e.target.value)} placeholder={formContent.placeholders.email} inputMode="email" />
+                        <span>{formContent?.fields?.email || 'Email Address'}</span>
+                        <input value={form.email} onChange={(e) => update('email', e.target.value)} placeholder={formContent?.placeholders?.email || 'finpixelindia@gmail.com'} inputMode="email" />
                         {fieldErrors.email && <small>{fieldErrors.email}</small>}
                       </label>
                       <div className="form-field">
-                        <span>{formContent.fields.business}</span>
+                        <span>{formContent?.fields?.business || 'Business / Industry'}</span>
                         <div className={`custom-select ${businessOpen ? 'custom-select--open' : ''}`} ref={businessMenuRef}>
                           <button className="custom-select-trigger" type="button" onClick={() => setBusinessOpen(!businessOpen)} aria-haspopup="listbox" aria-expanded={businessOpen}>
-                            <span className={form.business_type ? '' : 'placeholder'}>{form.business_type || formContent.placeholders.business}</span>
+                            <span className={form.business_type ? '' : 'placeholder'}>{form.business_type || (formContent?.placeholders?.business || 'Select industry...')}</span>
                             <ChevronDown size={15} />
                           </button>
                           <AnimatePresence>
                             {businessOpen && (
                               <motion.div className="custom-select-menu" role="listbox" initial={{ opacity: 0, y: -8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -5, scale: 0.98 }} transition={{ type: 'spring', damping: 22, stiffness: 300 }}>
-                                {formContent.businessTypes.map((item: string) => (
+                                {(formContent?.businessTypes || ['Fintech & Finance', 'Corporate & Agency', 'E-Commerce & Retail', 'Healthcare & Wellness', 'Real Estate & Builders', 'Tech & AI Startups', 'Other Services']).map((item: string) => (
                                   <button type="button" role="option" aria-selected={form.business_type === item} key={item} onClick={() => { update('business_type', item); setBusinessOpen(false); }}>
                                     <span>{item}</span>
                                     {form.business_type === item && <Check size={14} />}
@@ -835,8 +857,8 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
                         {fieldErrors.business_type && <small>{fieldErrors.business_type}</small>}
                       </div>
                       <label className="form-span">
-                        <span>{formContent.fields.message}</span>
-                        <textarea value={form.message} onChange={(e) => update('message', e.target.value)} placeholder={formContent.placeholders.message} rows={3} />
+                        <span>{formContent?.fields?.message || 'Project Details / Goal'}</span>
+                        <textarea value={form.message} onChange={(e) => update('message', e.target.value)} placeholder={formContent?.placeholders?.message || 'Tell us about your business, features you want, and your design ideas...'} rows={3} />
                       </label>
                     </div>
                     {status === 'error' && (
@@ -844,8 +866,8 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
                         {message}
                       </motion.div>
                     )}
-                    <Button type="submit" className="form-submit">{status === 'sending' ? formContent.sending : formContent.submit}<ArrowRight size={17} /></Button>
-                    <p className="form-note"><ShieldCheck size={14} />{formContent.note}</p>
+                    <Button type="submit" className="form-submit">{status === 'sending' ? (formContent?.sending || 'Sending...') : (formContent?.submit || 'Send Query')}<ArrowRight size={17} /></Button>
+                    <p className="form-note"><ShieldCheck size={14} />{formContent?.note || 'No commitment required. 100% free first draft.'}</p>
                   </form>
                 </motion.div>
               )}
