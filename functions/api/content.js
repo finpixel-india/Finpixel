@@ -1,4 +1,4 @@
-﻿const STATIC_CONTENT = [
+const STATIC_CONTENT = [
   {
     id: 1, section: "nav", sort_order: 1,
     content: {
@@ -232,8 +232,8 @@
       navLabel: "Navigate",
       contactLabel: "Contact",
       socialLabel: "Connect",
-      whatsapp: "+91 WhatsApp",
-      whatsappRaw: "919999999999",
+      whatsapp: "+91 70041 76367",
+      whatsappRaw: "917004176367",
       whatsappMessage: "Hi Finpixel India! I'm interested in a free demo for my website.",
       email: "finpixelindia@gmail.com",
       location: "Bihar · Pan-India Remote",
@@ -249,9 +249,14 @@
         { label: "Privacy Policy", href: "/privacy" }
       ],
       contactOptions: [
-        { type: "whatsapp", label: "WhatsApp", value: "+91 WhatsApp", href: "https://wa.me/919999999999?text=Hi%20Finpixel%20India!" },
+        { type: "whatsapp", label: "WhatsApp", value: "+91 70041 76367", href: "https://wa.me/917004176367?text=Hi%20Finpixel%20India!%20I%27m%20interested%20in%20a%20free%20demo." },
         { type: "email", label: "Email", value: "finpixelindia@gmail.com", href: "mailto:finpixelindia@gmail.com" },
-        { type: "instagram", label: "Instagram", value: "@finpixelindia", href: "https://instagram.com/finpixelindia" }
+        { type: "instagram", label: "Instagram", value: "@finpixel.india", href: "https://instagram.com/finpixel.india" },
+        { type: "linkedin", label: "LinkedIn", value: "Ashish Singh", href: "https://www.linkedin.com/in/ashish-singh-9212563a3" },
+        { type: "fiverr", label: "Fiverr", value: "finpixelindia", href: "https://www.fiverr.com/finpixelindia" },
+        { type: "x", label: "X (Twitter)", value: "@Finpixelindia", href: "https://x.com/Finpixelindia" },
+        { type: "linktree", label: "Linktree", value: "linktr.ee/finpixelindia", href: "https://linktr.ee/finpixelindia" },
+        { type: "notion", label: "Notion", value: "FinPixel India Official", href: "https://www.notion.so/FinPixel-India-official-2dff04948ec9806ba968fdaab1925f53" }
       ]
     }
   },
