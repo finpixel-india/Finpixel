@@ -14,6 +14,7 @@ import {
   Code2,
   Coffee,
   FileText,
+  Github,
   Globe2,
   GraduationCap,
   HeartPulse,
@@ -281,7 +282,9 @@ function ContactIcon({ type, size = 18 }: { type: string; size?: number }) {
   if (type === 'linkedin') return <Linkedin size={size} />;
   if (type === 'linktree') return <Link2 size={size} />;
   if (type === 'notion') return <FileText size={size} />;
-  if (type === 'fiverr') return <span className="brand-glyph brand-glyph--fiverr">fi</span>;
+  if (type === 'github') return <Github size={size} />;
+  if (type === 'fiverr') return <span className="brand-glyph brand-glyph--fiverr" style={{ fontSize: size * 0.72, fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1 }}>fi</span>;
+  if (type === 'x') return <span className="brand-glyph brand-glyph--x" style={{ fontSize: size * 0.88, fontWeight: 700, lineHeight: 1 }}>𝕏</span>;
   return <span className="brand-glyph">X</span>;
 }
 
@@ -645,18 +648,21 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
     if (!submittedLead) return whatsappLink;
     const baseUrl = whatsappLink.split('?')[0];
     const formattedMessage = [
-      '*FINPIXEL INDIA — FREE DEMO REQUEST*',
+      '🎯 *FREE DEMO REQUEST — FINPIXEL INDIA*',
+      '━━━━━━━━━━━━━━━━━━━━',
       '',
-      `*Reference:* ${reference || 'Pending'}`,
-      `*Name:* ${submittedLead.name}`,
-      `*WhatsApp:* ${submittedLead.phone}`,
-      `*Email:* ${submittedLead.email || 'Not provided'}`,
-      `*Business / Project Type:* ${submittedLead.business_type}`,
+      `📋 *Reference:* ${reference || 'Pending'}`,
+      `👤 *Name:* ${submittedLead.name}`,
+      `📱 *WhatsApp:* ${submittedLead.phone}`,
+      `📧 *Email:* ${submittedLead.email || 'Not provided'}`,
+      `🏢 *Business:* ${submittedLead.business_type}`,
       '',
-      '*What I want my website to achieve:*',
+      '━━━━━━━━━━━━━━━━━━━━',
+      '💬 *What I want my website to achieve:*',
       submittedLead.message || 'I would like to discuss the right website for my business.',
+      '━━━━━━━━━━━━━━━━━━━━',
       '',
-      '_I submitted this request through the Finpixel India website and would like to continue the conversation._',
+      '_Submitted via finpixelindia.pages.dev — excited to see my free demo!_ 🚀',
     ].join('\n');
     return `${baseUrl}?text=${encodeURIComponent(formattedMessage)}`;
   }, [submittedLead, reference, whatsappLink]);
@@ -670,40 +676,103 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
   return (
     <AnimatePresence>
       {state.open && (
-        <motion.div className="modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={onClose}>
-          <motion.div className="lead-modal" role="dialog" aria-modal="true" aria-labelledby="lead-title" initial={{ opacity: 0, y: 20, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: .99 }} transition={{ duration: .48, ease: [0.16, 1, 0.3, 1] }} onMouseDown={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={onClose} aria-label="Close form"><X size={20} /></button>
-            {status === 'success' ? (
-              <div className="success-state" role="status" aria-live="polite">
-                <span><CheckCircle2 size={32} /></span>
-                <Eyebrow>{formContent.successEyebrow}</Eyebrow>
-                <h2>{formContent.successTitle}</h2>
-                <p>{message}</p>
-                <div className="success-reference"><span>{formContent.referenceLabel}</span><b>{reference}</b></div>
-                {submittedLead && <div className="success-lead-summary"><span><b>{formContent.summaryName}</b>{submittedLead.name}</span><span><b>{formContent.summaryProject}</b>{submittedLead.business_type}</span></div>}
-                <div className="success-next"><small>{formContent.nextLabel}</small>{formContent.successSteps.map((step: any, index: number) => <div key={step.title}><i>{index + 1}</i><span><b>{step.title}</b><em>{step.description}</em></span></div>)}</div>
-                <p className="success-whatsapp-note"><WhatsAppIcon size={14} />{formContent.whatsappNote}</p>
-                <div className="success-actions"><a className="button button--primary" href={detailedWhatsAppLink}>{formContent.whatsappCta}<WhatsAppIcon size={17} /></a><Button variant="secondary" onClick={onClose}>{formContent.done}</Button></div>
-              </div>
-            ) : (
-              <>
-                <Eyebrow>{formContent.eyebrow}</Eyebrow>
-                <h2 id="lead-title">{formContent.title}</h2>
-                <p className="modal-intro">{formContent.subheadline}</p>
-                <form onSubmit={submit} noValidate>
-                  <div className="form-grid">
-                    <label><span>{formContent.fields.name}</span><input value={form.name} onChange={(e) => update('name', e.target.value)} placeholder={formContent.placeholders.name} autoFocus />{fieldErrors.name && <small>{fieldErrors.name}</small>}</label>
-                    <label><span>{formContent.fields.phone}</span><input value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder={formContent.placeholders.phone} inputMode="tel" />{fieldErrors.phone && <small>{fieldErrors.phone}</small>}</label>
-                    <label><span>{formContent.fields.email}</span><input value={form.email} onChange={(e) => update('email', e.target.value)} placeholder={formContent.placeholders.email} inputMode="email" />{fieldErrors.email && <small>{fieldErrors.email}</small>}</label>
-                    <div className="form-field"><span>{formContent.fields.business}</span><div className={`custom-select ${businessOpen ? 'custom-select--open' : ''}`} ref={businessMenuRef}><button className="custom-select-trigger" type="button" onClick={() => setBusinessOpen(!businessOpen)} aria-haspopup="listbox" aria-expanded={businessOpen}><span className={form.business_type ? '' : 'placeholder'}>{form.business_type || formContent.placeholders.business}</span><ChevronDown size={15} /></button><AnimatePresence>{businessOpen && <motion.div className="custom-select-menu" role="listbox" initial={{ opacity: 0, y: -6, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -4, scale: .99 }} transition={{ duration: .24, ease: [0.16, 1, 0.3, 1] }}>{formContent.businessTypes.map((item: string) => <button type="button" role="option" aria-selected={form.business_type === item} key={item} onClick={() => { update('business_type', item); setBusinessOpen(false); }}><span>{item}</span>{form.business_type === item && <Check size={14} />}</button>)}</motion.div>}</AnimatePresence></div>{fieldErrors.business_type && <small>{fieldErrors.business_type}</small>}</div>
-                    <label className="form-span"><span>{formContent.fields.message}</span><textarea value={form.message} onChange={(e) => update('message', e.target.value)} placeholder={formContent.placeholders.message} rows={3} /></label>
-                  </div>
-                  {status === 'error' && <div className="form-error">{message}</div>}
-                  <Button type="submit" className="form-submit">{status === 'sending' ? formContent.sending : formContent.submit}<ArrowRight size={17} /></Button>
-                  <p className="form-note"><ShieldCheck size={14} />{formContent.note}</p>
-                </form>
-              </>
-            )}
+        <motion.div
+          className="modal-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          onMouseDown={onClose}
+        >
+          <motion.div
+            className="lead-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lead-title"
+            initial={{ opacity: 0, y: 56, scale: 0.91 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 36, scale: 0.95 }}
+            transition={{ type: 'spring', damping: 26, stiffness: 300, mass: 0.85 }}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <div className="modal-glow" />
+            <button className="modal-close" onClick={onClose} aria-label="Close form"><X size={16} /></button>
+
+            <AnimatePresence mode="wait">
+              {status === 'success' ? (
+                <motion.div
+                  key="success"
+                  className="modal-success"
+                  initial={{ opacity: 0, scale: 0.95, y: 16 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.96, y: -12 }}
+                  transition={{ type: 'spring', damping: 24, stiffness: 280 }}
+                  role="status"
+                  aria-live="polite"
+                >
+                  <motion.div
+                    className="success-icon-ring"
+                    initial={{ scale: 0, rotate: -30 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: 'spring', damping: 16, stiffness: 240, delay: 0.08 }}
+                  >
+                    <CheckCircle2 size={36} />
+                  </motion.div>
+                  <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
+                    <Eyebrow>{formContent.successEyebrow}</Eyebrow>
+                    <h2 className="success-headline">{formContent.successTitle}</h2>
+                    <p className="success-msg">{message}</p>
+                  </motion.div>
+                  <motion.div className="success-ref-card" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.26, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}>
+                    <span>{formContent.referenceLabel}</span>
+                    <strong>{reference}</strong>
+                  </motion.div>
+                  {submittedLead && (
+                    <motion.div className="success-lead-summary" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.32, duration: 0.42, ease: [0.16, 1, 0.3, 1] }}>
+                      <div><span>{formContent.summaryName}</span><b>{submittedLead.name}</b></div>
+                      <div><span>{formContent.summaryProject}</span><b>{submittedLead.business_type}</b></div>
+                    </motion.div>
+                  )}
+                  <motion.div className="success-next" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38, duration: 0.42, ease: [0.16, 1, 0.3, 1] }}>
+                    <small>{formContent.nextLabel}</small>
+                    {formContent.successSteps.map((step: any, index: number) => (
+                      <div key={step.title}><i>{index + 1}</i><span><b>{step.title}</b><em>{step.description}</em></span></div>
+                    ))}
+                  </motion.div>
+                  <motion.div className="success-actions" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.44, duration: 0.42, ease: [0.16, 1, 0.3, 1] }}>
+                    <a className="button button--primary success-wa-cta" href={detailedWhatsAppLink} target="_blank" rel="noreferrer">
+                      <WhatsAppIcon size={17} />{formContent.whatsappCta}
+                    </a>
+                    <Button variant="secondary" onClick={onClose}>{formContent.done}</Button>
+                  </motion.div>
+                  <motion.p className="success-whatsapp-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.52 }}>
+                    <WhatsAppIcon size={13} />{formContent.whatsappNote}
+                  </motion.p>
+                </motion.div>
+              ) : (
+                <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.28 }}>
+                  <Eyebrow>{formContent.eyebrow}</Eyebrow>
+                  <h2 id="lead-title">{formContent.title}</h2>
+                  <p className="modal-intro">{formContent.subheadline}</p>
+                  <form onSubmit={submit} noValidate>
+                    <div className="form-grid">
+                      <label><span>{formContent.fields.name}</span><input value={form.name} onChange={(e) => update('name', e.target.value)} placeholder={formContent.placeholders.name} autoFocus />{fieldErrors.name && <small>{fieldErrors.name}</small>}</label>
+                      <label><span>{formContent.fields.phone}</span><input value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder={formContent.placeholders.phone} inputMode="tel" />{fieldErrors.phone && <small>{fieldErrors.phone}</small>}</label>
+                      <label><span>{formContent.fields.email}</span><input value={form.email} onChange={(e) => update('email', e.target.value)} placeholder={formContent.placeholders.email} inputMode="email" />{fieldErrors.email && <small>{fieldErrors.email}</small>}</label>
+                      <div className="form-field"><span>{formContent.fields.business}</span><div className={`custom-select ${businessOpen ? 'custom-select--open' : ''}`} ref={businessMenuRef}><button className="custom-select-trigger" type="button" onClick={() => setBusinessOpen(!businessOpen)} aria-haspopup="listbox" aria-expanded={businessOpen}><span className={form.business_type ? '' : 'placeholder'}>{form.business_type || formContent.placeholders.business}</span><ChevronDown size={15} /></button><AnimatePresence>{businessOpen && <motion.div className="custom-select-menu" role="listbox" initial={{ opacity: 0, y: -8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -5, scale: 0.98 }} transition={{ type: 'spring', damping: 22, stiffness: 300 }}>{formContent.businessTypes.map((item: string) => <button type="button" role="option" aria-selected={form.business_type === item} key={item} onClick={() => { update('business_type', item); setBusinessOpen(false); }}><span>{item}</span>{form.business_type === item && <Check size={14} />}</button>)}</motion.div>}</AnimatePresence></div>{fieldErrors.business_type && <small>{fieldErrors.business_type}</small>}</div>
+                      <label className="form-span"><span>{formContent.fields.message}</span><textarea value={form.message} onChange={(e) => update('message', e.target.value)} placeholder={formContent.placeholders.message} rows={3} /></label>
+                    </div>
+                    {status === 'error' && (
+                      <motion.div className="form-error" initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+                        {message}
+                      </motion.div>
+                    )}
+                    <Button type="submit" className="form-submit">{status === 'sending' ? formContent.sending : formContent.submit}<ArrowRight size={17} /></Button>
+                    <p className="form-note"><ShieldCheck size={14} />{formContent.note}</p>
+                  </form>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </motion.div>
       )}

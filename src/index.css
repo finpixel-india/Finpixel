@@ -1157,3 +1157,41 @@ html[data-lite] :is(.about-principle, .about-capability, .about-strength, .growt
   .snow-layer { display: none; }
   .code-editor code > span, .code-cursor { animation: none; }
 }
+
+/* =============================================
+   MODAL — REDESIGNED WITH iOS SPRING PHYSICS
+   ============================================= */
+
+.modal-glow { position: absolute; z-index: 0; width: 420px; height: 260px; top: -80px; right: -60px; border-radius: 50%; background: radial-gradient(ellipse, rgba(202,167,102,.14), transparent 68%); filter: blur(55px); pointer-events: none; }
+.lead-modal { position: relative; overflow: hidden; }
+.lead-modal > * { position: relative; z-index: 1; }
+
+/* Success state — redesigned */
+.modal-success { display: flex; flex-direction: column; gap: 18px; }
+.success-icon-ring { width: 72px; height: 72px; display: grid; place-items: center; border-radius: 50%; color: var(--gold-dark); background: linear-gradient(145deg, rgba(222,197,142,.18), rgba(202,167,102,.08)); border: 1.5px solid rgba(202,167,102,.32); box-shadow: 0 12px 32px rgba(171,129,56,.14), inset 0 1px 0 rgba(255,255,255,.5); }
+.success-headline { margin: 10px 0 6px; font-size: clamp(23px, 3vw, 30px); letter-spacing: -.045em; }
+.success-msg { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+.success-ref-card { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border: 1px solid rgba(202,167,102,.28); border-radius: 14px; background: linear-gradient(120deg, rgba(255,255,255,.6), rgba(222,197,142,.12)); box-shadow: inset 0 1px 0 rgba(255,255,255,.8); }
+.success-ref-card span { color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.success-ref-card strong { color: var(--ink); font-size: 17px; font-weight: 750; letter-spacing: -.02em; }
+.success-lead-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.success-lead-summary > div { padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.42); display: flex; flex-direction: column; gap: 3px; }
+.success-lead-summary span { color: var(--muted); font-size: 10px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
+.success-lead-summary b { color: var(--ink); font-size: 13px; font-weight: 650; }
+.success-wa-cta { gap: 10px; }
+
+/* Dark mode — success state */
+html[data-theme="dark"] .success-icon-ring { color: #e0bf80; background: linear-gradient(145deg, rgba(222,197,142,.12), rgba(202,167,102,.06)); border-color: rgba(202,167,102,.24); box-shadow: 0 12px 32px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.1); }
+html[data-theme="dark"] .success-ref-card { border-color: rgba(202,167,102,.2); background: linear-gradient(120deg, rgba(255,255,255,.06), rgba(222,197,142,.06)); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+html[data-theme="dark"] .success-ref-card strong { color: #f0ede6; }
+html[data-theme="dark"] .success-lead-summary > div { border-color: rgba(255,255,255,.1); background: rgba(255,255,255,.04); }
+html[data-theme="dark"] .success-lead-summary b { color: #f0ede6; }
+html[data-theme="dark"] .modal-glow { background: radial-gradient(ellipse, rgba(202,167,102,.1), transparent 68%); }
+
+/* Light theme — modal */
+html:not([data-theme="dark"]) .success-icon-ring { color: #0879b6; background: linear-gradient(145deg, rgba(25,147,212,.1), rgba(18,109,160,.06)); border-color: rgba(35,148,210,.24); box-shadow: 0 12px 32px rgba(30,120,175,.12), inset 0 1px 0 rgba(255,255,255,.7); }
+html:not([data-theme="dark"]) .success-ref-card { border-color: rgba(28,148,212,.2); background: linear-gradient(120deg, rgba(255,255,255,.7), rgba(186,226,251,.2)); }
+html:not([data-theme="dark"]) .success-ref-card strong { color: #0b2637; }
+html:not([data-theme="dark"]) .success-lead-summary > div { border-color: rgba(255,255,255,.85); background: rgba(255,255,255,.55); }
+html:not([data-theme="dark"]) .success-headline { color: #0b2637; }
+html:not([data-theme="dark"]) .modal-glow { background: radial-gradient(ellipse, rgba(91,185,237,.12), transparent 68%); }

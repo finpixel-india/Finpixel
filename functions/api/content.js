@@ -232,8 +232,8 @@ const STATIC_CONTENT = [
       navLabel: "Navigate",
       contactLabel: "Contact",
       socialLabel: "Connect",
-      whatsapp: "+91 70041 76367",
-      whatsappRaw: "917004176367",
+      whatsapp: "+91 91423 44728",
+      whatsappRaw: "919142344728",
       whatsappMessage: "Hi Finpixel India! I'm interested in a free demo for my website.",
       email: "finpixelindia@gmail.com",
       location: "Bihar · Pan-India Remote",
@@ -249,14 +249,15 @@ const STATIC_CONTENT = [
         { label: "Privacy Policy", href: "/privacy" }
       ],
       contactOptions: [
-        { type: "whatsapp", label: "WhatsApp", value: "+91 70041 76367", href: "https://wa.me/917004176367?text=Hi%20Finpixel%20India!%20I%27m%20interested%20in%20a%20free%20demo." },
+        { type: "whatsapp", label: "WhatsApp", value: "+91 91423 44728", href: "https://wa.me/919142344728?text=Hi%20Finpixel%20India!%20I%27m%20interested%20in%20a%20free%20demo." },
         { type: "email", label: "Email", value: "finpixelindia@gmail.com", href: "mailto:finpixelindia@gmail.com" },
-        { type: "instagram", label: "Instagram", value: "@finpixel.india", href: "https://instagram.com/finpixel.india" },
+        { type: "instagram", label: "Instagram", value: "@finpixel.india", href: "https://www.instagram.com/finpixel.india" },
         { type: "linkedin", label: "LinkedIn", value: "Ashish Singh", href: "https://www.linkedin.com/in/ashish-singh-9212563a3" },
         { type: "fiverr", label: "Fiverr", value: "finpixelindia", href: "https://www.fiverr.com/finpixelindia" },
-        { type: "x", label: "X (Twitter)", value: "@Finpixelindia", href: "https://x.com/Finpixelindia" },
+        { type: "x", label: "X", value: "@Finpixelindia", href: "https://x.com/Finpixelindia" },
+        { type: "github", label: "GitHub", value: "finpixel-india", href: "https://github.com/finpixel-india" },
         { type: "linktree", label: "Linktree", value: "linktr.ee/finpixelindia", href: "https://linktr.ee/finpixelindia" },
-        { type: "notion", label: "Notion", value: "FinPixel India Official", href: "https://www.notion.so/FinPixel-India-official-2dff04948ec9806ba968fdaab1925f53" }
+        { type: "notion", label: "Notion", value: "FinPixel India", href: "https://www.notion.so/FinPixel-India-official-2dff04948ec9806ba968fdaab1925f53" }
       ]
     }
   },
@@ -308,22 +309,124 @@ const STATIC_CONTENT = [
     id: 14, section: "privacy", sort_order: 14,
     content: {
       metaTitle: "Privacy Policy — Finpixel India",
-      eyebrow: "Legal",
+      eyebrow: "Legal · Privacy",
       title: "Privacy Policy",
-      intro: "Finpixel India is committed to protecting your privacy. This policy explains how we collect, use, and protect your information.",
+      intro: "At Finpixel India, your privacy is a core principle — not an afterthought. This policy explains exactly what we collect, why we collect it, and how we protect it.",
       effectiveLabel: "Effective Date:",
-      effectiveDate: "1 January 2026",
+      effectiveDate: "1 September 2026",
       brandNote: "Premium Hand-Coded Websites",
       backLabel: "Back to Home",
       contentsLabel: "Contents",
-      callout: { title: "Your Privacy Matters", description: "We collect only what's necessary to serve you. We never sell your data." },
+      callout: { title: "Your Data, Your Rights", description: "We collect only what is necessary to serve you. We never sell, rent, or share your personal data with advertisers or third-party marketers." },
       sections: [
-        { title: "Information We Collect", paragraphs: ["We collect information you provide directly, such as your name, phone number, email address, and business details when you submit a demo request or contact us."], items: ["Name and contact details", "Business type and website goals", "Messages sent through our forms or WhatsApp"] },
-        { title: "How We Use Your Information", paragraphs: ["We use your information to respond to your enquiries, prepare your free demo, and communicate with you about your project."], items: null },
-        { title: "Data Security", paragraphs: ["Your information is stored securely. We do not share, sell, or rent your personal data to third parties."], items: null },
-        { title: "Contact Us", paragraphs: ["If you have any questions about this privacy policy, please contact us."], items: null }
+        {
+          title: "Who We Are",
+          paragraphs: [
+            "Finpixel India is a remote-first digital studio founded by Ashish Singh, based in Bihar with a Pan-India presence. We build premium hand-coded websites, hosting systems, local SEO, and digital growth services for businesses across India.",
+            "For the purposes of this Privacy Policy, 'Finpixel India', 'we', 'us', and 'our' refer to the Finpixel India studio and its team. 'You' refers to any visitor, client, or individual who interacts with our website or services."
+          ],
+          items: null
+        },
+        {
+          title: "Information We Collect",
+          paragraphs: [
+            "We collect information you provide directly when you interact with our website or contact us through any channel. We collect only the minimum information necessary to serve you effectively."
+          ],
+          items: [
+            "Full name and business name",
+            "WhatsApp / phone number",
+            "Email address (optional)",
+            "Business type and project description",
+            "Website goals and messages submitted through our forms",
+            "Basic usage data such as browser type and page visits (no advertising trackers)"
+          ]
+        },
+        {
+          title: "How We Use Your Information",
+          paragraphs: [
+            "We use the information we collect exclusively to provide and improve our services. Specifically, we use it to:",
+          ],
+          items: [
+            "Respond to your demo requests and enquiries",
+            "Prepare and present your free demo website",
+            "Communicate project timelines, pricing, and next steps",
+            "Send project updates, invoices, and support communications",
+            "Improve our website and service quality",
+            "Comply with legal obligations"
+          ]
+        },
+        {
+          title: "How We Share Your Information",
+          paragraphs: [
+            "We do not sell, rent, or trade your personal information to any third party. We may share your information only in the following limited circumstances:",
+            "With trusted service providers (such as email delivery services) strictly necessary to deliver our services — bound by confidentiality agreements. With legal authorities if required by applicable law, regulation, or court order. With your explicit written consent for any other purpose."
+          ],
+          items: null
+        },
+        {
+          title: "Data Retention",
+          paragraphs: [
+            "We retain your personal information for as long as necessary to fulfil the purposes outlined in this policy — typically for the duration of our active client relationship.",
+            "After project completion, basic contact details may be retained for up to 2 years for legal and accounting compliance. You may request deletion at any time (see 'Your Rights' section below)."
+          ],
+          items: null
+        },
+        {
+          title: "Data Security",
+          paragraphs: [
+            "We take data security seriously. We implement industry-standard safeguards including encrypted HTTPS/TLS data transmission for all communications, secure cloud storage with access controls, and limited internal access on a need-to-know basis.",
+            "While we work hard to protect your data, no method of transmission over the internet is 100% secure. We encourage you to contact us immediately if you suspect any unauthorised access to your information."
+          ],
+          items: null
+        },
+        {
+          title: "Cookies & Tracking",
+          paragraphs: [
+            "Our website uses minimal, essential cookies only — specifically to remember your theme preference (light/dark mode) and your AI chat history stored locally on your device.",
+            "We do not use advertising cookies, cross-site tracking, or third-party analytics that profile your behaviour. We do not sell your browsing data."
+          ],
+          items: null
+        },
+        {
+          title: "Your Rights",
+          paragraphs: [
+            "You have clear rights regarding your personal data. You may exercise any of the following at any time by contacting us at finpixelindia@gmail.com:"
+          ],
+          items: [
+            "Access — Request a copy of the personal data we hold about you",
+            "Correction — Request that inaccurate or outdated data be corrected",
+            "Deletion — Request that your data be deleted (subject to legal retention requirements)",
+            "Restriction — Request that we limit how we use your data",
+            "Portability — Request your data in a machine-readable format",
+            "Withdraw consent — Opt out of non-essential communications at any time"
+          ]
+        },
+        {
+          title: "Children's Privacy",
+          paragraphs: [
+            "Finpixel India's services are intended for adults and businesses. We do not knowingly collect personal data from individuals under the age of 18.",
+            "If you believe a minor has provided us with personal data, please contact us immediately and we will delete that information promptly."
+          ],
+          items: null
+        },
+        {
+          title: "Third-Party Links",
+          paragraphs: [
+            "Our website may contain links to external platforms such as Instagram, LinkedIn, GitHub, and Fiverr. These links are provided for convenience. We are not responsible for the privacy practices of those third-party websites.",
+            "We encourage you to review the privacy policies of any third-party sites you visit."
+          ],
+          items: null
+        },
+        {
+          title: "Changes to This Policy",
+          paragraphs: [
+            "We may update this Privacy Policy from time to time to reflect changes in our practices or applicable law. When we do, we will revise the Effective Date at the top of this page.",
+            "For significant changes, we will notify active clients via email or WhatsApp. Your continued use of our services after any changes constitutes your acceptance of the updated policy."
+          ],
+          items: null
+        }
       ],
-      contact: { eyebrow: "Questions?", title: "Get in Touch", description: "For any privacy-related queries, reach out to us directly.", email: "finpixelindia@gmail.com" },
+      contact: { eyebrow: "Privacy Queries", title: "Contact Our Team", description: "For any questions about this Privacy Policy, to exercise your rights, or to report a concern — reach out directly. We respond within 24 hours.", email: "finpixelindia@gmail.com" },
       footer: "© 2026 Finpixel India. All rights reserved."
     }
   }
