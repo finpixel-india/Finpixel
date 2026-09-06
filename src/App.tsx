@@ -35,6 +35,7 @@ import {
   Send,
   ShieldCheck,
   Snowflake,
+  Sparkles,
   Store,
   Sun,
   Trash2,
@@ -494,27 +495,92 @@ function AboutSection({ about }: { about: any }) {
   return (
     <section className="about-section section" id="about">
       <div className="container">
-        <Reveal className="about-hero"><Eyebrow>{about.eyebrow}</Eyebrow><h2>{about.headline}</h2><p>{about.tagline}</p></Reveal>
+        <Reveal className="about-hero">
+          <Eyebrow>{about.eyebrow}</Eyebrow>
+          <h2>{about.headline}</h2>
+          <p>{about.tagline}</p>
+        </Reveal>
         <div className="about-story-grid">
           <Reveal className="about-side-title"><span>01</span><h3>{about.who.title}</h3></Reveal>
-          <Reveal className="about-story" delay={.06}>{about.who.paragraphs.map((paragraph: string) => <p key={paragraph}>{paragraph}</p>)}</Reveal>
+          <Reveal className="about-story" delay={.06}>
+            {about.who.paragraphs.map((paragraph: string) => <p key={paragraph}>{paragraph}</p>)}
+          </Reveal>
         </div>
         <div className="about-principles">
-          {[about.vision, about.goal].map((item: any, index: number) => <Reveal className="about-principle" key={item.title} delay={index * .06}><span>0{index + 2}</span><h3>{item.title}</h3><p>{item.description}</p></Reveal>)}
+          {[about.vision, about.goal].map((item: any, index: number) => (
+            <Reveal className="about-principle" key={item.title} delay={index * .06}>
+              <span>0{index + 2}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </Reveal>
+          ))}
         </div>
-        <Reveal className="about-heading"><span>Capabilities</span><h3>{about.whatWeDo.title}</h3></Reveal>
+        <Reveal className="about-heading">
+          <span>Capabilities</span>
+          <h3>{about.whatWeDo.title}</h3>
+          {about.whatWeDo.subtitle && <p className="about-subtitle" style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: '14px' }}>{about.whatWeDo.subtitle}</p>}
+        </Reveal>
         <div className="about-capability-grid">
-          {about.whatWeDo.items.map((item: any, index: number) => { const Icon = iconMap[item.icon] || Code2; return <Reveal className="about-capability" key={item.title} delay={(index % 2) * .06}><div><Icon size={21} strokeWidth={1.5} /><span>0{index + 1}</span></div><h4>{item.title}</h4><p>{item.description}</p></Reveal>; })}
+          {about.whatWeDo.items.map((item: any, index: number) => {
+            const Icon = iconMap[item.icon] || Code2;
+            return (
+              <Reveal className="about-capability" key={item.title} delay={(index % 2) * .06}>
+                <div>
+                  <Icon size={21} strokeWidth={1.5} />
+                  <span>0{index + 1}</span>
+                </div>
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </Reveal>
+            );
+          })}
         </div>
-        <Reveal className="about-heading"><span>Why Finpixel</span><h3>{about.strengths.title}</h3></Reveal>
+        <Reveal className="about-heading">
+          <span>Why Finpixel</span>
+          <h3>{about.strengths.title}</h3>
+        </Reveal>
         <div className="about-strengths">
-          {about.strengths.items.map((item: any, index: number) => <Reveal className="about-strength" key={item.title} delay={(index % 2) * .05}><span>0{index + 1}</span><div><h4>{item.title}</h4><p>{item.description}</p></div></Reveal>)}
+          {about.strengths.items.map((item: any, index: number) => (
+            <Reveal className="about-strength" key={item.title} delay={(index % 2) * .05}>
+              <span>0{index + 1}</span>
+              <div>
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
-        <Reveal className="about-heading centered"><span>Beyond Websites</span><h3>{about.otherWork.title}</h3><p>{about.otherWork.intro}</p></Reveal>
+        <Reveal className="about-heading centered">
+          <span>Beyond Websites</span>
+          <h3>{about.otherWork.title}</h3>
+          <p>{about.otherWork.intro}</p>
+        </Reveal>
         <div className="growth-grid">
-          {about.otherWork.items.map((item: any, index: number) => <Reveal className="growth-card" key={item.trapTitle} delay={(index % 3) * .05}><div className="growth-card-top"><span>{item.service}</span><i>0{index + 1}</i></div><small>{item.trapLabel}</small><h4>{item.trapTitle}</h4><blockquote>{item.quote}</blockquote><div className="growth-solution"><small>{item.solutionLabel}</small><h5>{item.solutionTitle}</h5><p>{item.solution}</p></div></Reveal>)}
+          {about.otherWork.items.map((item: any, index: number) => (
+            <Reveal className="growth-card" key={item.trapTitle} delay={(index % 3) * .05}>
+              <div className="growth-card-top">
+                <span>{item.service}</span>
+                <i>0{index + 1}</i>
+              </div>
+              <small>{item.trapLabel}</small>
+              <h4>{item.trapTitle}</h4>
+              <blockquote>{item.quote}</blockquote>
+              <div className="growth-solution">
+                <div className="growth-solution-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                  <small style={{ margin: 0 }}>{item.solutionLabel}</small>
+                  <span className="growth-reveal-hint" style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: .75 }}>Click / Hover to reveal</span>
+                </div>
+                <h5>{item.solutionTitle}</h5>
+                <p>{item.solution}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
-        <Reveal className="about-closing"><span>Finpixel / Bharat / 2026</span><h3>{about.promise.title}</h3>{about.promise.paragraphs.map((paragraph: string) => <p key={paragraph}>{paragraph}</p>)}</Reveal>
+        <Reveal className="about-closing">
+          <span>Finpixel / Bharat / 2026</span>
+          <h3>{about.promise.title}</h3>
+          {about.promise.paragraphs.map((paragraph: string) => <p key={paragraph}>{paragraph}</p>)}
+        </Reveal>
       </div>
     </section>
   );
@@ -1050,16 +1116,28 @@ export default function App() {
 
   const CONTACT_OPTIONS = [
     { type: 'whatsapp', label: 'WhatsApp', value: '+91 70041 76367', href: 'https://wa.me/917004176367' },
-    { type: 'email', label: 'Email', value: 'finpixelindia@gmail.com', href: 'mailto:finpixelindia@gmail.com' },
+    { type: 'email', label: 'Email', value: 'finpixelindia@gmail.com', href: 'https://mail.google.com/mail/?view=cm&fs=1&to=finpixelindia@gmail.com' },
     { type: 'instagram', label: 'Instagram', value: '@finpixel.india', href: 'https://instagram.com/finpixel.india' },
     { type: 'linkedin', label: 'LinkedIn', value: 'Ashish Singh', href: 'https://www.linkedin.com/in/ashish-singh-9212563a3' },
     { type: 'fiverr', label: 'Fiverr', value: 'finpixelindia', href: 'https://www.fiverr.com/finpixelindia' },
     { type: 'x', label: 'X (Twitter)', value: '@Finpixelindia', href: 'https://x.com/Finpixelindia' },
+    { type: 'github', label: 'GitHub', value: 'finpixel-india', href: 'https://github.com/finpixel-india' },
     { type: 'linktree', label: 'Linktree', value: 'linktr.ee/finpixelindia', href: 'https://linktr.ee/finpixelindia' },
     { type: 'notion', label: 'Portfolio', value: 'FinPixel India', href: 'https://www.notion.so/FinPixel-India-official-2dff04948ec9806ba968fdaab1925f53' },
   ];
 
-  const contactOptions = (content.footer?.contactOptions?.length ? content.footer.contactOptions : CONTACT_OPTIONS);
+  const contactOptions = useMemo(() => {
+    const rawOptions = content.footer?.contactOptions?.length ? content.footer.contactOptions : CONTACT_OPTIONS;
+    return rawOptions.map((opt: any) => {
+      if (opt.type === 'whatsapp') {
+        return { ...opt, value: '+91 70041 76367', href: 'https://wa.me/917004176367?text=Hello%20Finpixel%20India!%20I%20am%20interested%20in%20a%20free%20demo.' };
+      }
+      if (opt.type === 'email') {
+        return { ...opt, value: 'finpixelindia@gmail.com', href: 'https://mail.google.com/mail/?view=cm&fs=1&to=finpixelindia@gmail.com' };
+      }
+      return opt;
+    });
+  }, [content.footer]);
 
   if (loading) return <AnimatePresence mode="wait"><motion.div key="loading" className="loading-stage" initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .28, ease: [0.16, 1, 0.3, 1] }}><LoadingScreen /></motion.div></AnimatePresence>;
   if (error || !content.hero) return (
@@ -1069,6 +1147,155 @@ export default function App() {
   );
 
   const { nav, hero, trust, about, services, comparison, pricing, industries, codeShowcase, promise, process, pageShowcase, cta, footer, leadForm, privacy, chatbot } = content;
+
+  const heroData = useMemo(() => ({
+    ...hero,
+    eyebrow: hero?.eyebrow || "India's Premium Web Design Studio",
+    title: 'We Build Brands, Not Just Websites.',
+    subheadline: 'We build high-performance websites for Schools, Colleges, Hotels, Restaurants and Brands across India. Fast. Secure. Affordable.',
+    primary: hero?.primary || 'Get Your Free Demo',
+    secondary: hero?.secondary || 'See Our Work',
+    assurances: hero?.assurances || ['No payment before approval', 'Full code ownership'],
+    floatingCards: hero?.floatingCards || [
+      { label: 'Google Speed', value: '100 / 100' },
+      { label: 'Pan-India', value: 'Remote-First' },
+    ],
+  }), [hero]);
+
+  const aboutData = useMemo(() => ({
+    ...about,
+    eyebrow: 'We Are Finpixel India',
+    headline: 'The Digital Architects of Bharat',
+    tagline: 'Bridging traditional Bharat with the digital future through uncompromising hand-crafted technology.',
+    who: {
+      title: 'Who We Are',
+      paragraphs: [
+        'Finpixel India is not your typical corporate agency. We are an agile, remote-first technology studio born out of a simple necessity: Local businesses deserve world-class digital tools.',
+        'Founded by Ashish Singh (Tech Lead) and the team, we operate from the heart of Bihar with a Pan-India vision. We are the bridge between the traditional "brick-and-mortar" India and the explosive "Digital India" of tomorrow. While big city agencies chase million-dollar contracts, we are busy empowering the schools, hospitals, and businesses that actually build our nation.',
+      ],
+    },
+    vision: {
+      title: 'Our Vision',
+      description: 'To democratize premium web technology. We believe a small private school in a village should have a website that is just as fast, secure, and professional as a top university in Mumbai.',
+    },
+    goal: {
+      title: 'Our Goal',
+      description: "To digitize 1,000 local institutions across India by 2027. We aren't just building websites; we are building Digital Assets that solve real business problems—increasing admissions for schools, patient trust for doctors, and footfall for local brands.",
+    },
+    whatWeDo: {
+      title: 'High-Performance Static Web Development',
+      items: [
+        {
+          title: 'Hand-Coded Perfection',
+          description: 'We do not use slow, bloated website builders like Wix or WordPress. We write raw, clean HTML5, CSS3, and JavaScript. This means our sites load in under 1 second, even on 4G mobile networks.',
+          icon: 'code',
+        },
+        {
+          title: 'School & College Ecosystems',
+          description: 'We build digital infrastructures for education—admission inquiry portals, mobile-responsive galleries, and notice boards that principals can actually use.',
+          icon: 'graduation',
+        },
+        {
+          title: 'Hyper-Local SEO & Maps',
+          description: 'A website is useless if no one can find it. We specialize in Google Maps Optimization, ensuring our clients dominate the "Near Me" searches in their districts.',
+          icon: 'maps',
+        },
+        {
+          title: 'Zero-Maintenance Hosting',
+          description: 'By leveraging global CDNs (Content Delivery Networks) like Netlify, we ensure 99.99% uptime with military-grade SSL security, all without forcing expensive server costs on our clients.',
+          icon: 'hosting',
+        },
+      ],
+    },
+    strengths: {
+      title: 'Our Unmatched Strengths',
+      items: [
+        {
+          title: "1. The 'Trust First' Model (Our Secret Weapon)",
+          description: "In an industry full of scams and over-promising, we flipped the script. We operate on a 'Demo First, Pay Later' philosophy. We build a working prototype of the client's website before we ask for a single rupee. We don't demand trust; we earn it.",
+        },
+        {
+          title: "2. The 'Spiderman' Agility",
+          description: "We run lean. We don't have bloated teams or fancy offices. Using advanced AI-augmented coding workflows (Gemini/Antigravity), we can deploy a full-scale commercial website in 48 hours—something traditional agencies take weeks to do.",
+        },
+        {
+          title: "3. The 'Local Empathy' Advantage",
+          description: "We understand the Indian market. We know that a local business in India cares more about trust (Bharosa) and value than technical jargon. We speak their language, offering solutions that fit their budget without compromising on the 'Big City' quality.",
+        },
+        {
+          title: "4. 100/100 Performance Obsession",
+          description: "We are obsessed with the Google PageSpeed Score. While competitors deliver heavy sites that score a '40/100' and lose customers, we aim for a perfect 100/100. We treat speed as a feature, not an afterthought.",
+        },
+      ],
+    },
+    otherWork: {
+      title: 'Our Other Precise Works',
+      intro: 'Beyond websites, we engineer growth using Influence and Automation.',
+      items: [
+        {
+          service: 'Social Media Promotion',
+          trapLabel: 'The Visibility Trap',
+          trapTitle: "The 'Ghost Town' Feed",
+          quote: '"Posting every single day but nobody cares? You are shouting in an empty room."',
+          solutionLabel: 'The Solution',
+          solutionTitle: 'Viral Engineering',
+          solution: "We don't guess algorithms; we master them. We turn your social media into a traffic engine that drives real customers, not just random likes.",
+        },
+        {
+          service: 'Social Media Promotion',
+          trapLabel: 'The Aesthetic Trap',
+          trapTitle: "Design by 'My Nephew'",
+          quote: '"Ugly Canva posts ruin your brand reputation faster than a bad review ever could."',
+          solutionLabel: 'The Solution',
+          solutionTitle: 'Premium Brand Authority',
+          solution: 'Your feed is your digital showroom. We curate a cohesive, high-end aesthetic that makes your brand look expensive, trustworthy, and unignorable.',
+        },
+        {
+          service: 'Social Media Promotion',
+          trapLabel: 'The ROI Trap',
+          trapTitle: "'Likes' Don't Pay Bills",
+          quote: '"Vanity metrics are fun to look at. Bank deposits are better to live with."',
+          solutionLabel: 'The Solution',
+          solutionTitle: 'Conversion Strategy',
+          solution: 'We stop chasing hearts and start chasing leads. We align your content strategy to funnel users directly to your "Buy Now" button.',
+        },
+        {
+          service: 'Automation & AI',
+          trapLabel: 'The Data Trap',
+          trapTitle: 'Excel Sheet Hell',
+          quote: '"Still manually copying data from emails to spreadsheets? It’s 2026. Stop working like it\'s 1999."',
+          solutionLabel: 'The Solution',
+          solutionTitle: 'n8n Workflow Automation',
+          solution: 'We build invisible robots that sync your data instantly. Form submission → CRM → WhatsApp → Invoice. Zero human effort required.',
+        },
+        {
+          service: 'Automation & AI',
+          trapLabel: 'The Speed Trap',
+          trapTitle: 'Leads Going Cold',
+          quote: '"If you take 6 hours to reply to a potential customer, they are already buying from your competitor."',
+          solutionLabel: 'The Solution',
+          solutionTitle: 'Instant AI Agents',
+          solution: 'We deploy intelligent auto-responders that engage leads instantly, 24/7. Capture the customer while their interest is hot.',
+        },
+        {
+          service: 'Automation & AI',
+          trapLabel: 'The Accuracy Trap',
+          trapTitle: 'Human Error is Expensive',
+          quote: '"Typos in invoices? Missed follow-ups? Humans get tired and make mistakes."',
+          solutionLabel: 'The Solution',
+          solutionTitle: 'Flawless Execution',
+          solution: "Robots don't need coffee breaks. We automate your boring repetitive tasks so you can focus on growing the business.",
+        },
+      ],
+    },
+    promise: {
+      title: 'The Finpixel Promise',
+      paragraphs: [
+        "We are not just service providers; we are Co-Founders in our clients' digital journey. When a school works with Finpixel, they don't just get a URL. They get a 24/7 technical partner, a business growth consultant, and a team that takes their success personally.",
+        'We are Finpixel India. We build the web, so you can build your business.',
+      ],
+    },
+  }), [about]);
 
   const privacyData = privacy || {
     metaTitle: 'Privacy Policy — Finpixel India',
@@ -1151,16 +1378,16 @@ export default function App() {
           <div className="hero-glow" />
           <div className="container hero-inner">
             <div className="hero-copy">
-              <motion.div initial={lightweightMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .54, delay: .02, ease: [0.16, 1, 0.3, 1] }}><Eyebrow>{hero.eyebrow}</Eyebrow></motion.div>
-              <motion.h1 initial={lightweightMotion ? false : { opacity: 0, y: 11 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .58, delay: .08, ease: [0.16, 1, 0.3, 1] }}>{hero.title}</motion.h1>
-              <motion.p initial={lightweightMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .58, delay: .14, ease: [0.16, 1, 0.3, 1] }}>{hero.subheadline}</motion.p>
-              <motion.div className="hero-actions" initial={lightweightMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .56, delay: .2, ease: [0.16, 1, 0.3, 1] }}><Button onClick={() => openDemo()}>{hero.primary}<ArrowRight size={17} /></Button><Button variant="secondary" href="#work">{hero.secondary}<MousePointer2 size={16} /></Button></motion.div>
-              <motion.div className="hero-assurance" initial={lightweightMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .54, delay: .26, ease: [0.16, 1, 0.3, 1] }}><span><Check size={13} />{hero.assurances[0]}</span><span><Check size={13} />{hero.assurances[1]}</span></motion.div>
+              <motion.div initial={lightweightMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .54, delay: .02, ease: [0.16, 1, 0.3, 1] }}><Eyebrow>{heroData.eyebrow}</Eyebrow></motion.div>
+              <motion.h1 initial={lightweightMotion ? false : { opacity: 0, y: 11 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .58, delay: .08, ease: [0.16, 1, 0.3, 1] }}>{heroData.title}</motion.h1>
+              <motion.p initial={lightweightMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .58, delay: .14, ease: [0.16, 1, 0.3, 1] }}>{heroData.subheadline}</motion.p>
+              <motion.div className="hero-actions" initial={lightweightMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .56, delay: .2, ease: [0.16, 1, 0.3, 1] }}><Button onClick={() => openDemo()}>{heroData.primary}<ArrowRight size={17} /></Button><Button variant="secondary" href="#work">{heroData.secondary}<MousePointer2 size={16} /></Button></motion.div>
+              <motion.div className="hero-assurance" initial={lightweightMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .54, delay: .26, ease: [0.16, 1, 0.3, 1] }}><span><Check size={13} />{heroData.assurances[0]}</span><span><Check size={13} />{heroData.assurances[1]}</span></motion.div>
             </div>
             <motion.div ref={heroProductRef} className="hero-product" initial={lightweightMotion ? false : { opacity: 0, y: 18, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: .72, delay: .22, ease: [0.16, 1, 0.3, 1] }} onPointerMove={tiltHero} onPointerLeave={resetHeroTilt}>
               <div className="product-halo" /><div className="browser-bob"><BrowserProduct /></div>
-              <div className="floating-chip floating-chip--speed"><Zap size={14} /><span><small>{hero.floatingCards[0].label}</small><b>{hero.floatingCards[0].value}</b></span></div>
-              <div className="floating-chip floating-chip--location"><Globe2 size={14} /><span><small>{hero.floatingCards[1].label}</small><b>{hero.floatingCards[1].value}</b></span></div>
+              <div className="floating-chip floating-chip--speed"><Zap size={14} /><span><small>{heroData.floatingCards[0].label}</small><b>{heroData.floatingCards[0].value}</b></span></div>
+              <div className="floating-chip floating-chip--location"><Globe2 size={14} /><span><small>{heroData.floatingCards[1].label}</small><b>{heroData.floatingCards[1].value}</b></span></div>
             </motion.div>
           </div>
         </section>
@@ -1220,41 +1447,36 @@ export default function App() {
 
         {codeShowcase && <LiveCodeWindow config={codeShowcase} />}
 
-        <section className="promise-section section">
+        {promise && <section className="promise-section section">
           <div className="container">
             <Reveal className="section-heading centered"><Eyebrow>{promise.eyebrow}</Eyebrow><h2>{promise.headline}</h2><p>{promise.subheadline}</p></Reveal>
-            <div className="promise-grid">{promise.items.map((item: any, index: number) => { const Icon = iconMap[item.icon] || Check; return <Reveal className="promise-card" key={item.title} delay={index * .05}><div className="promise-number">0{index + 1}</div><div className="gold-icon"><Icon size={23} strokeWidth={1.6} /></div><h3>{item.title}</h3><p>{item.description}</p></Reveal>; })}</div>
+            <div className="promise-grid">{promise.items.map((item: any, index: number) => { const Icon = iconMap[item.icon] || ShieldCheck; return <Reveal className="promise-card" key={item.title} delay={index * .06}><span className="promise-number">0{index + 1}</span><div className="gold-icon"><Icon size={24} strokeWidth={1.5} /></div><h3>{item.title}</h3><p>{item.description}</p></Reveal>; })}</div>
           </div>
-        </section>
+        </section>}
 
-        <section className="process-section section">
+        {process && <section className="process-section section">
           <div className="container">
-            <Reveal className="section-heading"><Eyebrow>{process.eyebrow}</Eyebrow><h2>{process.headline}</h2><p>{process.subheadline}</p></Reveal>
-            <div className="process-grid">{process.steps.map((step: any, index: number) => <Reveal className="process-step" key={step.title} delay={index * .07}><div className="step-line"><span>0{index + 1}</span></div><small>{step.timing}</small><h3>{step.title}</h3><p>{step.description}</p></Reveal>)}</div>
+            <Reveal className="section-heading centered"><Eyebrow>{process.eyebrow}</Eyebrow><h2>{process.headline}</h2><p>{process.subheadline}</p></Reveal>
+            <div className="process-steps">{process.steps.map((step: any, index: number) => <Reveal className="process-step" key={step.title} delay={index * .08}><div className="step-line"><span /><i>0{index + 1}</i></div><h3>{step.title}</h3><p>{step.description}</p></Reveal>)}</div>
           </div>
-        </section>
+        </section>}
 
         {pageShowcase && <section className="pages-section section">
-          <div className="pages-ambient pages-ambient--one" />
-          <div className="pages-ambient pages-ambient--two" />
-          <div className="container pages-inner">
+          <div className="container">
             <Reveal className="section-heading centered"><Eyebrow>{pageShowcase.eyebrow}</Eyebrow><h2>{pageShowcase.headline}</h2><p>{pageShowcase.subheadline}</p></Reveal>
-            <div className="page-card-grid">
-              {pageShowcase.items.map((page: any, index: number) => <Reveal key={page.title} delay={(index % 3) * .06}><PageFlashcard page={page} index={index} active={activePage === index} onToggle={() => setActivePage(activePage === index ? null : index)} /></Reveal>)}
-            </div>
-            <Reveal className="pages-note"><i className="note-pixel" aria-hidden="true" /><span>{pageShowcase.note}</span></Reveal>
+            <div className="pages-grid">{pageShowcase.items.map((page: any, index: number) => <Reveal className="page-card" key={page.title} delay={index * .06}><div className="page-card-top"><span>0{index + 1}</span><div className="page-card-icon"><Sparkles size={17} /></div></div><span className="page-card-prompt">{page.prompt}</span><h3>{page.title}</h3><p>{page.description}</p><div className="page-card-metric"><CheckCircle2 size={14} /><span>{page.highlight}</span></div></Reveal>)}</div>
+            <Reveal className="pages-footer"><p className="pages-note">{pageShowcase.footnote}</p></Reveal>
           </div>
         </section>}
 
         {pricing && <section className="pricing-section section" id="pricing">
-          <div className="pricing-orb pricing-orb--one" /><div className="pricing-orb pricing-orb--two" />
-          <div className="container pricing-inner">
+          <div className="container">
             <Reveal className="section-heading centered"><Eyebrow>{pricing.eyebrow}</Eyebrow><h2>{pricing.headline}</h2><p>{pricing.subheadline}</p></Reveal>
             <div className="pricing-grid">
-              {pricing.plans.map((plan: any, index: number) => <Reveal className={`pricing-card ${plan.featured ? 'pricing-card--featured' : ''}`} key={plan.name} delay={index * .06}>
-                <div className="pricing-card-head"><span>{plan.label}</span>{plan.badge && <b>{plan.badge}</b>}</div>
-                <h3>{plan.name}</h3><p>{plan.description}</p>
-                <div className="price"><small>{plan.prefix}</small><strong>{plan.price}</strong><span>{plan.suffix}</span></div>
+              {pricing.plans.map((plan: any, index: number) => <Reveal className={`pricing-card ${plan.featured ? 'pricing-card--featured' : ''}`} key={plan.name} delay={index * .07}>
+                {plan.featured && <span className="pricing-featured-badge">{pricing.popularBadge}</span>}
+                <div className="pricing-card-head"><span>{plan.subtitle}</span><h3>{plan.name}</h3></div>
+                <div className="pricing-price-wrap"><div className="price">{plan.period ? <small>{plan.currency}</small> : ''}<b>{plan.price}</b>{plan.period ? <span>/{plan.period}</span> : ''}</div><p>{plan.description}</p></div>
                 <div className="pricing-rule" />
                 <ul>{plan.features.map((feature: string) => <li key={feature}><Check size={15} />{feature}</li>)}</ul>
                 <Button variant={plan.featured ? 'primary' : 'secondary'} onClick={() => openDemo(plan.interest)}>{plan.cta}<ArrowRight size={16} /></Button>
@@ -1264,7 +1486,7 @@ export default function App() {
           </div>
         </section>}
 
-        {about && <AboutSection about={about} />}
+        {aboutData && <AboutSection about={aboutData} />}
 
         <section className="cta-section" id="contact">
           <div className="cta-noise" />
@@ -1275,7 +1497,34 @@ export default function App() {
             <p>{cta.subheadline}</p>
             <div className="cta-actions"><Button onClick={() => openDemo()}>{cta.primary}<ArrowRight size={18} /></Button><Button variant="darkGhost" href={whatsappLink}>{cta.secondary}<WhatsAppIcon size={18} /></Button></div>
             <div className="cta-proof">{cta.proofs.map((item: string) => <span key={item}><Check size={13} />{item}</span>)}</div>
-            <div className="contact-options-grid">{contactOptions.map((option: any) => { const external = /^https?:\/\//.test(option.href); return <a href={option.href} key={option.type} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}><i><ContactIcon type={option.type} /></i><span><b>{option.label}</b><small>{option.value}</small></span><ArrowRight className="contact-arrow" size={15} /></a>; })}</div>
+            <div className="contact-options-grid">
+              {contactOptions.map((option: any, index: number) => {
+                const isEmail = option.type === 'email';
+                const isCentered = index === contactOptions.length - 1 && contactOptions.length % 4 === 1;
+                const emailHref = 'https://mail.google.com/mail/?view=cm&fs=1&to=finpixelindia@gmail.com';
+                const targetHref = isEmail ? emailHref : option.href;
+                const external = isEmail || /^https?:\/\//.test(targetHref);
+                return (
+                  <a
+                    href={targetHref}
+                    key={option.type}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noreferrer' : undefined}
+                    className={`contact-option-card ${isCentered ? 'contact-card--centered' : ''}`}
+                    onClick={(e) => {
+                      if (isEmail) {
+                        e.preventDefault();
+                        window.open(emailHref, '_blank', 'noopener,noreferrer');
+                      }
+                    }}
+                  >
+                    <i><ContactIcon type={option.type} /></i>
+                    <span><b>{option.label}</b><small>{option.value}</small></span>
+                    <ArrowRight className="contact-arrow" size={15} />
+                  </a>
+                );
+              })}
+            </div>
           </Reveal>
         </section>
       </main>
@@ -1286,8 +1535,51 @@ export default function App() {
             <div className="footer-brand"><a className="footer-logo-link" href="#top" onClick={(event) => navigateToSection(event, '#top')}><BrandMark /></a><p>{footer.description}</p><span><span />{footer.availability}</span></div>
             <div className="footer-links">
               <div><b>{footer.navLabel}</b>{footer.links.map((link: any) => <a href={link.href} key={link.label} onClick={(event) => navigateToSection(event, link.href)}>{link.label}</a>)}</div>
-              <div><b>{footer.contactLabel || 'Contact'}</b><a href={whatsappLink} target="_blank" rel="noreferrer">+91 70041 76367</a><a href="mailto:finpixelindia@gmail.com">finpixelindia@gmail.com</a><small>{footer.location}</small></div>
-              <div><b>{footer.socialLabel || 'Connect'}</b><div className="socials footer-contact-icons">{contactOptions.map((option: any) => { const external = /^https?:\/\//.test(option.href); return <a href={option.href} key={option.type} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined} aria-label={option.label} title={option.label}><ContactIcon type={option.type} size={16} /></a>; })}</div></div>
+              <div>
+                <b>{footer.contactLabel || 'Contact'}</b>
+                <a href={whatsappLink} target="_blank" rel="noreferrer">+91 70041 76367</a>
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=finpixelindia@gmail.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=finpixelindia@gmail.com', '_blank', 'noopener,noreferrer');
+                  }}
+                >
+                  finpixelindia@gmail.com
+                </a>
+                <small>{footer.location}</small>
+              </div>
+              <div>
+                <b>{footer.socialLabel || 'Connect'}</b>
+                <div className="socials footer-contact-icons">
+                  {contactOptions.map((option: any) => {
+                    const isEmail = option.type === 'email';
+                    const emailHref = 'https://mail.google.com/mail/?view=cm&fs=1&to=finpixelindia@gmail.com';
+                    const targetHref = isEmail ? emailHref : option.href;
+                    const external = isEmail || /^https?:\/\//.test(targetHref);
+                    return (
+                      <a
+                        href={targetHref}
+                        key={option.type}
+                        target={external ? '_blank' : undefined}
+                        rel={external ? 'noreferrer' : undefined}
+                        aria-label={option.label}
+                        title={option.label}
+                        onClick={(e) => {
+                          if (isEmail) {
+                            e.preventDefault();
+                            window.open(emailHref, '_blank', 'noopener,noreferrer');
+                          }
+                        }}
+                      >
+                        <ContactIcon type={option.type} size={16} />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
           <div className="footer-bottom">
