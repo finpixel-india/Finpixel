@@ -496,131 +496,6 @@ function PreciseWorkCard({ item, index }: { item: any; index: number }) {
   const [active, setActive] = useState(false);
   const isSocial = Boolean(item.service?.toLowerCase().includes('social'));
 
-  const renderVisual = (isRevealed: boolean) => {
-    switch (index) {
-      case 0:
-        return isRevealed ? (
-          <div className="growth-preview-mockup growth-preview--success">
-            <div className="growth-metric-stat">
-              <span className="growth-pulse-dot" />
-              <strong>+480% Viral Reach</strong>
-            </div>
-            <div className="growth-mini-bars">
-              <span style={{ height: '35%' }} />
-              <span style={{ height: '55%' }} />
-              <span style={{ height: '75%' }} />
-              <span style={{ height: '95%' }} />
-            </div>
-            <small>🔥 34 Direct Leads Generated</small>
-          </div>
-        ) : (
-          <div className="growth-preview-mockup growth-preview--warning">
-            <div className="growth-post-ghost">
-              <div className="ghost-avatar" />
-              <div className="ghost-lines">
-                <span style={{ width: '75%' }} />
-                <span style={{ width: '45%' }} />
-              </div>
-            </div>
-            <small>🦗 0 Likes · 0 Comments · Zero Traffic</small>
-          </div>
-        );
-      case 1:
-        return isRevealed ? (
-          <div className="growth-preview-mockup growth-preview--success">
-            <div className="growth-brand-swatch">
-              <span className="swatch-accent" />
-              <span>Swiss Grid & Luxury Typography</span>
-            </div>
-            <small>✨ High-End Digital Showroom Presence</small>
-          </div>
-        ) : (
-          <div className="growth-preview-mockup growth-preview--warning">
-            <div className="growth-bad-design">
-              <span className="bad-font">CANVA TEMPLATE #492</span>
-            </div>
-            <small>⚠️ Stock clipart destroys buyer trust</small>
-          </div>
-        );
-      case 2:
-        return isRevealed ? (
-          <div className="growth-preview-mockup growth-preview--success">
-            <div className="growth-pipeline">
-              <span>Visitor</span>
-              <ArrowRight size={11} />
-              <span>WhatsApp</span>
-              <ArrowRight size={11} />
-              <strong>₹ Bank Lead</strong>
-            </div>
-            <small>🎯 Focus on deposits, not vanity hearts</small>
-          </div>
-        ) : (
-          <div className="growth-preview-mockup growth-preview--warning">
-            <div className="growth-vanity-hearts">
-              <span>❤️ 1,200 Hearts</span>
-              <span className="vanity-zero">₹0 Inflow</span>
-            </div>
-            <small>❌ Vanity likes do not pay business bills</small>
-          </div>
-        );
-      case 3:
-        return isRevealed ? (
-          <div className="growth-preview-mockup growth-preview--success">
-            <div className="growth-node-chain">
-              <span className="node-pill">Form</span>
-              <i>⚡</i>
-              <span className="node-pill">CRM</span>
-              <i>⚡</i>
-              <span className="node-pill">WhatsApp</span>
-            </div>
-            <small>🤖 100% Invisible Robots · Zero Manual Entry</small>
-          </div>
-        ) : (
-          <div className="growth-preview-mockup growth-preview--warning">
-            <div className="growth-sheet-grid">
-              <span>#REF!</span>
-              <span style={{ opacity: 0.6 }}>Copy..</span>
-              <span style={{ color: '#ef4444' }}>Paste Error</span>
-            </div>
-            <small>⚠️ Hours wasted copy-pasting tables</small>
-          </div>
-        );
-      case 4:
-        return isRevealed ? (
-          <div className="growth-preview-mockup growth-preview--success">
-            <div className="growth-ai-reply">
-              <span className="bot-bubble">AI: Demo confirmed for 4 PM!</span>
-              <small>⚡ Response in 4 seconds · 24/7/365</small>
-            </div>
-          </div>
-        ) : (
-          <div className="growth-preview-mockup growth-preview--warning">
-            <div className="growth-cold-timer">
-              <span>⏳ 6 Hours Unanswered</span>
-            </div>
-            <small>❄️ Client already went to your competitor</small>
-          </div>
-        );
-      default:
-        return isRevealed ? (
-          <div className="growth-preview-mockup growth-preview--success">
-            <div className="growth-verified-seal">
-              <CheckCircle2 size={14} />
-              <span>Automated Auditing · 0 Mistakes</span>
-            </div>
-            <small>🛡️ Error-free invoices & instant records</small>
-          </div>
-        ) : (
-          <div className="growth-preview-mockup growth-preview--warning">
-            <div className="growth-error-stamp">
-              <span>Typo in Invoice #108</span>
-            </div>
-            <small>⚠️ Costly human miscalculations</small>
-          </div>
-        );
-    }
-  };
-
   return (
     <div
       className={`growth-card ${active ? 'growth-card--active' : ''}`}
@@ -628,61 +503,57 @@ function PreciseWorkCard({ item, index }: { item: any; index: number }) {
       onMouseLeave={() => setActive(false)}
       role="button"
       tabIndex={0}
-      aria-label={`${item.trapTitle} - Click or hover to reveal solution`}
+      aria-label={`${item.trapTitle} - Click or hover to toggle solution`}
     >
-      <div className="growth-card-accent" />
+      <div className="growth-liquid-specular" />
 
-      {/* Front: The Trap / Problem */}
+      {/* Front Side: The Trap / Problem */}
       <div className="growth-card-side growth-card-front">
-        <div className="growth-card-top">
-          <span className={`growth-tag ${isSocial ? 'growth-tag--social' : 'growth-tag--tech'}`}>
-            {isSocial ? <Instagram size={13} /> : <Bot size={13} />}
-            {item.service}
+        <div className="growth-card-head">
+          <span className="growth-glass-tag">
+            {isSocial ? <Sparkles size={12} /> : <Zap size={12} />}
+            <span>{item.service}</span>
           </span>
-          <span className="growth-num">0{index + 1}</span>
+          <span className="growth-card-num">0{index + 1}</span>
         </div>
 
-        <div className="growth-visual-slot">
-          {renderVisual(false)}
+        <div className="growth-card-main">
+          <span className="growth-trap-badge">{item.trapLabel}</span>
+          <h4 className="growth-card-heading">{item.trapTitle}</h4>
+          <blockquote className="growth-quote-clean">{item.quote}</blockquote>
         </div>
 
-        <span className="growth-trap-pill">
-          <CircleX size={12} />
-          {item.trapLabel}
-        </span>
-        <h4 className="growth-trap-title">{item.trapTitle}</h4>
-        <blockquote className="growth-quote">{item.quote}</blockquote>
-
-        <div className="growth-reveal-cta">
-          <span>Reveal Solution</span>
-          <ArrowRight size={13} />
+        <div className="growth-card-foot">
+          <span className="growth-reveal-prompt">
+            <span>Reveal Solution</span>
+            <ArrowRight size={13} />
+          </span>
+          <span className="growth-tap-note">Tap / Hover</span>
         </div>
       </div>
 
-      {/* Back / Hover: The Solution */}
+      {/* Back Side: The Engineered Solution */}
       <div className="growth-card-side growth-card-back">
-        <div className="growth-card-top">
-          <span className="growth-solution-badge">
-            <Sparkles size={13} />
-            {item.solutionLabel || 'The Solution'}
-          </span>
-          <span className="growth-num">0{index + 1}</span>
-        </div>
-
-        <div className="growth-visual-slot">
-          {renderVisual(true)}
-        </div>
-
-        <span className="growth-solution-kicker">Engineered Fix</span>
-        <h4 className="growth-solution-title">{item.solutionTitle}</h4>
-        <p className="growth-solution-desc">{item.solution}</p>
-
-        <div className="growth-solution-footer">
-          <span className="growth-verified-tag">
+        <div className="growth-card-head">
+          <span className="growth-glass-tag growth-glass-tag--solution">
             <CheckCircle2 size={12} />
-            Finpixel Guaranteed
+            <span>{item.solutionLabel || 'Engineered Solution'}</span>
           </span>
-          <span className="growth-tap-hint">Tap or move away to close</span>
+          <span className="growth-card-num">0{index + 1}</span>
+        </div>
+
+        <div className="growth-card-main">
+          <span className="growth-solution-badge">Precision Fix</span>
+          <h4 className="growth-card-heading">{item.solutionTitle}</h4>
+          <p className="growth-solution-text">{item.solution}</p>
+        </div>
+
+        <div className="growth-card-foot">
+          <span className="growth-guarantee-note">
+            <ShieldCheck size={12} />
+            <span>Finpixel Architecture</span>
+          </span>
+          <span className="growth-close-action">Tap to close</span>
         </div>
       </div>
     </div>
