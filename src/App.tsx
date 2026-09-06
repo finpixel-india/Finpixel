@@ -1060,7 +1060,7 @@ export default function App() {
   }, [theme]);
   useEffect(() => {
     const device = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-    const lite = navigator.hardwareConcurrency <= 4 || (device.deviceMemory ?? 8) <= 4 || Boolean(device.connection?.saveData);
+    const lite = navigator.hardwareConcurrency <= 2 || (device.deviceMemory ?? 8) <= 2 || Boolean(device.connection?.saveData);
     document.documentElement.toggleAttribute('data-lite', lite);
     return () => document.documentElement.removeAttribute('data-lite');
   }, []);
@@ -1118,22 +1118,58 @@ export default function App() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (audioPlaying) {
+    if (!audio.paused) {
       audio.pause();
       setAudioPlaying(false);
-    } else {
+      return;
+    }
+
+    try {
+      if (!audio.src || !audio.src.includes('brand_explanation.mp3')) {
+        audio.src = '/brand_explanation.mp3';
+      }
+      if (audio.readyState === 0) {
+        audio.load();
+      }
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        await playPromise;
+      }
+      setAudioPlaying(true);
+    } catch (err) {
+      console.warn('Playback error, retrying load and play:', err);
       try {
+        audio.load();
         await audio.play();
         setAudioPlaying(true);
-      } catch (err) {
-        console.warn('Audio play notice: place brand_explanation.mp3 in public/ folder to enable audio playback.', err);
+      } catch (retryErr) {
+        console.error('Audio play failed completely:', retryErr);
         setAudioPlaying(false);
       }
     }
   };
 
-  useEffect(() => () => {
-    audioRef.current?.pause();
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onPlay = () => setAudioPlaying(true);
+    const onPause = () => setAudioPlaying(false);
+    const onEnded = () => {
+      setAudioPlaying(false);
+      audio.currentTime = 0;
+    };
+
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('ended', onEnded);
+
+    return () => {
+      audio.removeEventListener('play', onPlay);
+      audio.removeEventListener('pause', onPause);
+      audio.removeEventListener('ended', onEnded);
+      audio.pause();
+    };
   }, []);
 
   const navigateToSection = (event: ReactMouseEvent<HTMLAnchorElement>, href: string) => {
@@ -1142,12 +1178,11 @@ export default function App() {
     const target = document.querySelector(href);
     if (!target) return;
     event.preventDefault();
-    const needsFullLayout = href === '#contact';
-    if (needsFullLayout) document.documentElement.classList.add('force-layout');
+    document.documentElement.classList.add('force-layout');
     window.requestAnimationFrame(() => {
       target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
       window.history.replaceState(null, '', href);
-      if (needsFullLayout) window.setTimeout(() => document.documentElement.classList.remove('force-layout'), 900);
+      window.setTimeout(() => document.documentElement.classList.remove('force-layout'), 850);
     });
   };
 
@@ -1753,22 +1788,19 @@ export default function App() {
       <div className={`support-controls ${chatOpen ? 'support-controls--chat-open' : ''}`}><button className={chatOpen ? 'chatbot-toggle active' : 'chatbot-toggle'} type="button" onClick={() => setChatOpen(!chatOpen)} aria-label={`${chatOpen ? 'Close' : 'Open'} Finpixel AI chatbot`}><Bot size={21} /></button><motion.a className="whatsapp-float" href={whatsappLink} target="_blank" rel="noreferrer" aria-label="Chat with Finpixel India on WhatsApp" initial={{ opacity: 0, x: 12, scale: .96 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: .55, delay: .5, ease: [0.16, 1, 0.3, 1] }}><i><WhatsAppIcon size={23} /></i></motion.a></div>
 
       <AnimatePresence>{snowEnabled && <motion.div className="snow-layer" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .4 }}>{snowflakes.map((flake, index) => <span key={index} style={{ left: `${flake.left}%`, width: `${flake.size}px`, height: `${flake.size}px`, animationDelay: `${flake.delay}s`, animationDuration: `${flake.duration}s` }} />)}</motion.div>}</AnimatePresence>
-      <div className="experience-controls" aria-label="Experience controls"><button type="button" className={snowEnabled ? 'active' : ''} onClick={() => setSnowEnabled(!snowEnabled)} aria-label={`${snowEnabled ? 'Turn off' : 'Turn on'} snow effect`} data-label="Snow"><Snowflake size={17} /></button><button type="button" className={audioPlaying ? 'active' : ''} onClick={() => { void toggleAudioDescription(); }} aria-label={`${audioPlaying ? 'Stop' : 'Play'} audio description`} data-label="Listen">{audioPlaying ? <VolumeX size={17} /> : <Volume2 size={17} />}</button></div>
+      <div className="experience-controls" aria-label="Experience controls">
+        <button type="button" className={snowEnabled ? 'active' : ''} onClick={() => setSnowEnabled(!snowEnabled)} aria-label={`${snowEnabled ? 'Turn off' : 'Turn on'} snow effect`} data-label="Snow"><Snowflake size={17} /></button>
+        <button type="button" className={audioPlaying ? 'active audio-playing' : ''} onClick={() => { void toggleAudioDescription(); }} aria-label={`${audioPlaying ? 'Pause' : 'Play'} audio description`} data-label={audioPlaying ? 'Pause' : 'Listen'}>
+          {audioPlaying ? <VolumeX size={17} /> : <Volume2 size={17} />}
+          {audioPlaying && <span className="audio-pulse-ring" aria-hidden="true" />}
+        </button>
+      </div>
       <audio
         ref={audioRef}
-        preload="metadata"
-        onPlay={() => setAudioPlaying(true)}
-        onPause={() => setAudioPlaying(false)}
-        onEnded={() => {
-          setAudioPlaying(false);
-          if (audioRef.current) audioRef.current.currentTime = 0;
-        }}
-      >
-        <source src="/brand_explanation.mp3" type="audio/mpeg" />
-        <source src="/brand_explanation.wav" type="audio/wav" />
-        <source src="/brand_explanation.m4a" type="audio/mp4" />
-        <source src="/brand_explanation.ogg" type="audio/ogg" />
-      </audio>
+        src="/brand_explanation.mp3"
+        preload="auto"
+        playsInline
+      />
 
       <AnimatePresence>{chatOpen && chatbot && <AiChatbot config={chatbot} onClose={() => setChatOpen(false)} />}</AnimatePresence>
 
