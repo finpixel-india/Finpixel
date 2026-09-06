@@ -1,5 +1,6 @@
 import { FormEvent, MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { DEFAULT_CONTENT } from './defaultContent';
 import {
   ArrowLeft,
   ArrowRight,
@@ -492,39 +493,48 @@ function PageFlashcard({ page, index, active, onToggle }: { page: any; index: nu
 }
 
 function AboutSection({ about }: { about: any }) {
+  const whoParagraphs: string[] = about?.who?.paragraphs || [];
+  const principles: any[] = [about?.vision, about?.goal].filter(Boolean);
+  const capabilityItems: any[] = about?.whatWeDo?.items || [];
+  const strengthItems: any[] = about?.strengths?.items || [];
+  const otherWorkItems: any[] = about?.otherWork?.items || [];
+  const promiseParagraphs: string[] = about?.promise?.paragraphs || [];
+
   return (
     <section className="about-section section" id="about">
       <div className="container">
         <Reveal className="about-hero">
-          <Eyebrow>{about.eyebrow}</Eyebrow>
-          <h2>{about.headline}</h2>
-          <p>{about.tagline}</p>
+          <Eyebrow>{about?.eyebrow || 'We Are Finpixel India'}</Eyebrow>
+          <h2>{about?.headline || 'The Digital Architects of Bharat'}</h2>
+          <p>{about?.tagline || 'Bridging traditional Bharat with the digital future through uncompromising hand-crafted technology.'}</p>
         </Reveal>
         <div className="about-story-grid">
-          <Reveal className="about-side-title"><span>01</span><h3>{about.who.title}</h3></Reveal>
+          <Reveal className="about-side-title"><span>01</span><h3>{about?.who?.title || 'Who We Are'}</h3></Reveal>
           <Reveal className="about-story" delay={.06}>
-            {about.who.paragraphs.map((paragraph: string) => <p key={paragraph}>{paragraph}</p>)}
+            {whoParagraphs.map((paragraph: string) => <p key={paragraph}>{paragraph}</p>)}
           </Reveal>
         </div>
-        <div className="about-principles">
-          {[about.vision, about.goal].map((item: any, index: number) => (
-            <Reveal className="about-principle" key={item.title} delay={index * .06}>
-              <span>0{index + 2}</span>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </Reveal>
-          ))}
-        </div>
+        {principles.length > 0 && (
+          <div className="about-principles">
+            {principles.map((item: any, index: number) => (
+              <Reveal className="about-principle" key={item.title || index} delay={index * .06}>
+                <span>0{index + 2}</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </Reveal>
+            ))}
+          </div>
+        )}
         <Reveal className="about-heading">
           <span>Capabilities</span>
-          <h3>{about.whatWeDo.title}</h3>
-          {about.whatWeDo.subtitle && <p className="about-subtitle" style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: '14px' }}>{about.whatWeDo.subtitle}</p>}
+          <h3>{about?.whatWeDo?.title || 'High-Performance Static Web Development'}</h3>
+          {about?.whatWeDo?.subtitle && <p className="about-subtitle" style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: '14px' }}>{about.whatWeDo.subtitle}</p>}
         </Reveal>
         <div className="about-capability-grid">
-          {about.whatWeDo.items.map((item: any, index: number) => {
+          {capabilityItems.map((item: any, index: number) => {
             const Icon = iconMap[item.icon] || Code2;
             return (
-              <Reveal className="about-capability" key={item.title} delay={(index % 2) * .06}>
+              <Reveal className="about-capability" key={item.title || index} delay={(index % 2) * .06}>
                 <div>
                   <Icon size={21} strokeWidth={1.5} />
                   <span>0{index + 1}</span>
@@ -537,11 +547,11 @@ function AboutSection({ about }: { about: any }) {
         </div>
         <Reveal className="about-heading">
           <span>Why Finpixel</span>
-          <h3>{about.strengths.title}</h3>
+          <h3>{about?.strengths?.title || 'Our Unmatched Strengths'}</h3>
         </Reveal>
         <div className="about-strengths">
-          {about.strengths.items.map((item: any, index: number) => (
-            <Reveal className="about-strength" key={item.title} delay={(index % 2) * .05}>
+          {strengthItems.map((item: any, index: number) => (
+            <Reveal className="about-strength" key={item.title || index} delay={(index % 2) * .05}>
               <span>0{index + 1}</span>
               <div>
                 <h4>{item.title}</h4>
@@ -552,12 +562,12 @@ function AboutSection({ about }: { about: any }) {
         </div>
         <Reveal className="about-heading centered">
           <span>Beyond Websites</span>
-          <h3>{about.otherWork.title}</h3>
-          <p>{about.otherWork.intro}</p>
+          <h3>{about?.otherWork?.title || 'Our Other Precise Works'}</h3>
+          <p>{about?.otherWork?.intro || 'Beyond websites, we engineer growth using Influence and Automation.'}</p>
         </Reveal>
         <div className="growth-grid">
-          {about.otherWork.items.map((item: any, index: number) => (
-            <Reveal className="growth-card" key={item.trapTitle} delay={(index % 3) * .05}>
+          {otherWorkItems.map((item: any, index: number) => (
+            <Reveal className="growth-card" key={item.trapTitle || index} delay={(index % 3) * .05}>
               <div className="growth-card-top">
                 <span>{item.service}</span>
                 <i>0{index + 1}</i>
@@ -578,8 +588,8 @@ function AboutSection({ about }: { about: any }) {
         </div>
         <Reveal className="about-closing">
           <span>Finpixel / Bharat / 2026</span>
-          <h3>{about.promise.title}</h3>
-          {about.promise.paragraphs.map((paragraph: string) => <p key={paragraph}>{paragraph}</p>)}
+          <h3>{about?.promise?.title || 'The Finpixel Promise'}</h3>
+          {promiseParagraphs.map((paragraph: string) => <p key={paragraph}>{paragraph}</p>)}
         </Reveal>
       </div>
     </section>
@@ -953,8 +963,8 @@ export default function App() {
     if (saved === 'light' || saved === 'dark') return saved;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
-  const [content, setContent] = useState<ContentMap>({});
-  const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState<ContentMap>(DEFAULT_CONTENT);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -967,28 +977,28 @@ export default function App() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const snowflakes = useMemo(() => Array.from({ length: 18 }, (_, index) => ({ left: (index * 37 + 9) % 100, size: 3 + (index % 4), delay: -((index * 1.13) % 9), duration: 8 + (index % 5) * 1.1 })), []);
 
-  const fetchContent = async (silent = false) => {
-    if (!silent) {
-      setLoading(true);
-      setError('');
-    }
+  const fetchContent = async () => {
     try {
       const response = await fetch('/api/content');
+      const contentType = response.headers.get('content-type') || '';
+      if (!response.ok || !contentType.includes('application/json')) return;
       const rows = await response.json();
-      if (!response.ok) throw new Error(rows.error || 'Unable to load the site.');
+      if (!Array.isArray(rows)) return;
       const mapped = (rows as SiteRow[]).reduce<ContentMap>((result, row) => {
-        result[row.section] = row.content;
+        if (row && row.section && row.content) {
+          result[row.section] = row.content;
+        }
         return result;
       }, {});
-      setContent(mapped);
+      if (Object.keys(mapped).length > 0) {
+        setContent((prev) => ({ ...prev, ...mapped }));
+      }
     } catch (err) {
-      if (!silent) setError(err instanceof Error ? err.message : 'Unable to load the site.');
-    } finally {
-      if (!silent) setLoading(false);
+      console.warn('Content sync notice: running on high-speed built-in content.', err);
     }
   };
 
-  useEffect(() => { fetchContent(); }, []);
+  useEffect(() => { void fetchContent(); }, []);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('finpixel-theme', theme);
@@ -1051,41 +1061,25 @@ export default function App() {
   };
 
   const toggleAudioDescription = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
     if (audioPlaying) {
-      audioRef.current?.pause();
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      audio.pause();
       setAudioPlaying(false);
-      return;
-    }
-
-    const tracks = ['/audio/finpixel-description.mp3', '/audio/finpixel-description.ogg'];
-    for (const track of tracks) {
+    } else {
       try {
-        const response = await fetch(track, { method: 'HEAD' });
-        if (!response.ok || !audioRef.current) continue;
-        audioRef.current.src = track;
-        await audioRef.current.play();
+        await audio.play();
         setAudioPlaying(true);
-        return;
-      } catch { /* Try the next format, then use speech. */ }
-    }
-
-    if ('speechSynthesis' in window) {
-      const description = `${content.hero.title}. ${content.hero.subheadline} Finpixel India creates hand-coded websites, hosting, conversion-focused design, automation, and digital growth systems for ambitious organisations across India.`;
-      const speech = new SpeechSynthesisUtterance(description);
-      speech.rate = .94;
-      speech.pitch = .96;
-      speech.onend = () => setAudioPlaying(false);
-      speech.onerror = () => setAudioPlaying(false);
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(speech);
-      setAudioPlaying(true);
+      } catch (err) {
+        console.warn('Audio play notice: place brand_explanation.mp3 in public/ folder to enable audio playback.', err);
+        setAudioPlaying(false);
+      }
     }
   };
 
   useEffect(() => () => {
     audioRef.current?.pause();
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   }, []);
 
   const navigateToSection = (event: ReactMouseEvent<HTMLAnchorElement>, href: string) => {
@@ -1139,13 +1133,6 @@ export default function App() {
     });
   }, [content.footer]);
 
-  if (loading) return <AnimatePresence mode="wait"><motion.div key="loading" className="loading-stage" initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .28, ease: [0.16, 1, 0.3, 1] }}><LoadingScreen /></motion.div></AnimatePresence>;
-  if (error || !content.hero) return (
-    <main className="error-screen">
-      <div><BrandMark /><h1>Precision hit a pause.</h1><p>{error || 'Site content is currently unavailable.'}</p><Button onClick={fetchContent}>Try again <ArrowRight size={16} /></Button></div>
-    </main>
-  );
-
   const { nav, hero, trust, about, services, comparison, pricing, industries, codeShowcase, promise, process, pageShowcase, cta, footer, leadForm, privacy, chatbot } = content;
 
   const heroData = useMemo(() => ({
@@ -1155,11 +1142,15 @@ export default function App() {
     subheadline: 'We build high-performance websites for Schools, Colleges, Hotels, Restaurants and Brands across India. Fast. Secure. Affordable.',
     primary: hero?.primary || 'Get Your Free Demo',
     secondary: hero?.secondary || 'See Our Work',
-    assurances: hero?.assurances || ['No payment before approval', 'Full code ownership'],
-    floatingCards: hero?.floatingCards || [
-      { label: 'Google Speed', value: '100 / 100' },
-      { label: 'Pan-India', value: 'Remote-First' },
-    ],
+    assurances: Array.isArray(hero?.assurances) && hero.assurances.length >= 2
+      ? hero.assurances
+      : ['Demo First, Pay After Approval', '100% Code Ownership'],
+    floatingCards: Array.isArray(hero?.floatingCards) && hero.floatingCards.length >= 2
+      ? hero.floatingCards
+      : [
+          { label: 'Google Speed', value: '100 / 100' },
+          { label: 'Pan-India', value: 'Remote-First' },
+        ],
   }), [hero]);
 
   const aboutData = useMemo(() => ({
@@ -1461,11 +1452,11 @@ export default function App() {
           </div>
         </section>}
 
-        {pageShowcase && <section className="pages-section section">
+        {pageShowcase && Array.isArray(pageShowcase.items) && <section className="pages-section section">
           <div className="container">
             <Reveal className="section-heading centered"><Eyebrow>{pageShowcase.eyebrow}</Eyebrow><h2>{pageShowcase.headline}</h2><p>{pageShowcase.subheadline}</p></Reveal>
-            <div className="pages-grid">{pageShowcase.items.map((page: any, index: number) => <Reveal className="page-card" key={page.title} delay={index * .06}><div className="page-card-top"><span>0{index + 1}</span><div className="page-card-icon"><Sparkles size={17} /></div></div><span className="page-card-prompt">{page.prompt}</span><h3>{page.title}</h3><p>{page.description}</p><div className="page-card-metric"><CheckCircle2 size={14} /><span>{page.highlight}</span></div></Reveal>)}</div>
-            <Reveal className="pages-footer"><p className="pages-note">{pageShowcase.footnote}</p></Reveal>
+            <div className="pages-grid">{pageShowcase.items.map((page: any, index: number) => <Reveal className="page-card" key={page.title || index} delay={index * .06}><div className="page-card-top"><span>0{index + 1}</span><div className="page-card-icon"><Sparkles size={17} /></div></div><span className="page-card-prompt">{page.prompt || page.kicker || ''}</span><h3>{page.title}</h3><p>{page.description || page.detail || ''}</p><div className="page-card-metric"><CheckCircle2 size={14} /><span>{page.highlight || page.metric || ''}</span></div></Reveal>)}</div>
+            {pageShowcase.footnote && <Reveal className="pages-footer"><p className="pages-note">{pageShowcase.footnote}</p></Reveal>}
           </div>
         </section>}
 
@@ -1596,11 +1587,25 @@ export default function App() {
 
       <AnimatePresence>{snowEnabled && <motion.div className="snow-layer" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .4 }}>{snowflakes.map((flake, index) => <span key={index} style={{ left: `${flake.left}%`, width: `${flake.size}px`, height: `${flake.size}px`, animationDelay: `${flake.delay}s`, animationDuration: `${flake.duration}s` }} />)}</motion.div>}</AnimatePresence>
       <div className="experience-controls" aria-label="Experience controls"><button type="button" className={snowEnabled ? 'active' : ''} onClick={() => setSnowEnabled(!snowEnabled)} aria-label={`${snowEnabled ? 'Turn off' : 'Turn on'} snow effect`} data-label="Snow"><Snowflake size={17} /></button><button type="button" className={audioPlaying ? 'active' : ''} onClick={() => { void toggleAudioDescription(); }} aria-label={`${audioPlaying ? 'Stop' : 'Play'} audio description`} data-label="Listen">{audioPlaying ? <VolumeX size={17} /> : <Volume2 size={17} />}</button></div>
-      <audio ref={audioRef} preload="none" onEnded={() => setAudioPlaying(false)} />
+      <audio
+        ref={audioRef}
+        preload="metadata"
+        onPlay={() => setAudioPlaying(true)}
+        onPause={() => setAudioPlaying(false)}
+        onEnded={() => {
+          setAudioPlaying(false);
+          if (audioRef.current) audioRef.current.currentTime = 0;
+        }}
+      >
+        <source src="/brand_explanation.mp3" type="audio/mpeg" />
+        <source src="/brand_explanation.wav" type="audio/wav" />
+        <source src="/brand_explanation.m4a" type="audio/mp4" />
+        <source src="/brand_explanation.ogg" type="audio/ogg" />
+      </audio>
 
       <AnimatePresence>{chatOpen && chatbot && <AiChatbot config={chatbot} onClose={() => setChatOpen(false)} />}</AnimatePresence>
 
-      <LeadModal state={modal} onClose={() => setModal({ open: false, interest: '' })} formContent={leadForm} whatsappLink={whatsappLink} onSubmitted={() => { void fetchContent(true); }} />
+      <LeadModal state={modal} onClose={() => setModal({ open: false, interest: '' })} formContent={leadForm} whatsappLink={whatsappLink} onSubmitted={() => { void fetchContent(); }} />
     </motion.div>
     </AnimatePresence>
   );

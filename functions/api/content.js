@@ -17,14 +17,14 @@ const STATIC_CONTENT = [
     id: 2, section: "hero", sort_order: 2,
     content: {
       eyebrow: "Finpixel India · Bihar to Bharat",
-      title: "Websites That Win Business.",
-      subheadline: "Hand-coded, blazing-fast websites for schools, hotels, clinics, restaurants, startups & local brands. Demo first — pay only after you approve.",
+      title: "We Build Brands, Not Just Websites.",
+      subheadline: "We build high-performance websites for Schools, Colleges, Hotels, Restaurants and Brands across India. Fast. Secure. Affordable.",
       primary: "Get Your Free Demo",
       secondary: "See Our Work",
-      assurances: ["Demo First, Pay After Approval", "You Own Everything"],
+      assurances: ["Demo First, Pay After Approval", "100% Code Ownership"],
       floatingCards: [
-        { label: "PageSpeed Score", value: "100 / 100" },
-        { label: "Serving", value: "Pan-India" }
+        { label: "Google Speed", value: "100 / 100" },
+        { label: "Pan-India", value: "Remote-First" }
       ]
     }
   },
