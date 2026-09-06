@@ -646,32 +646,28 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
 
   const detailedWhatsAppLink = useMemo(() => {
     if (!submittedLead) return whatsappLink;
-    const baseUrl = whatsappLink.split('?')[0];
     const formattedMessage = [
       '🎯 *FREE DEMO REQUEST — FINPIXEL INDIA*',
-      '━━━━━━━━━━━━━━━━━━━━',
+      '━━━━━━━━━━━━━━━━━━━━━━━━',
       '',
-      `📋 *Reference:* ${reference || 'Pending'}`,
-      `👤 *Name:* ${submittedLead.name}`,
-      `📱 *WhatsApp:* ${submittedLead.phone}`,
+      `📋 *Reference No:* ${reference || 'FP-NEW'}`,
+      `👤 *Full Name:* ${submittedLead.name}`,
+      `📱 *Phone/WhatsApp:* ${submittedLead.phone}`,
       `📧 *Email:* ${submittedLead.email || 'Not provided'}`,
-      `🏢 *Business:* ${submittedLead.business_type}`,
+      `🏢 *Business Type:* ${submittedLead.business_type}`,
       '',
-      '━━━━━━━━━━━━━━━━━━━━',
-      '💬 *What I want my website to achieve:*',
-      submittedLead.message || 'I would like to discuss the right website for my business.',
-      '━━━━━━━━━━━━━━━━━━━━',
+      '━━━━━━━━━━━━━━━━━━━━━━━━',
+      '💬 *Project Requirements & Goals:*',
+      submittedLead.message || 'I would like to discuss a custom website for my business and learn more about the free demo.',
       '',
-      '_Submitted via finpixelindia.pages.dev — excited to see my free demo!_ 🚀',
+      '━━━━━━━━━━━━━━━━━━━━━━━━',
+      '✅ *Submitted via:* finpixelindia.pages.dev',
+      '⏰ *Submitted at:* ' + new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }),
+      '',
+      '_Looking forward to seeing the free demo! Please let me know the next steps._ 🚀',
     ].join('\n');
-    return `${baseUrl}?text=${encodeURIComponent(formattedMessage)}`;
+    return `https://wa.me/917004176367?text=${encodeURIComponent(formattedMessage)}`;
   }, [submittedLead, reference, whatsappLink]);
-
-  useEffect(() => {
-    if (status !== 'success' || !submittedLead) return;
-    const redirectTimer = window.setTimeout(() => window.location.assign(detailedWhatsAppLink), 2200);
-    return () => window.clearTimeout(redirectTimer);
-  }, [status, submittedLead, detailedWhatsAppLink]);
 
   return (
     <AnimatePresence>
@@ -681,7 +677,7 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
           onMouseDown={onClose}
         >
           <motion.div
@@ -689,13 +685,14 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
             role="dialog"
             aria-modal="true"
             aria-labelledby="lead-title"
-            initial={{ opacity: 0, y: 56, scale: 0.91 }}
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 36, scale: 0.95 }}
-            transition={{ type: 'spring', damping: 26, stiffness: 300, mass: 0.85 }}
+            exit={{ opacity: 0, y: 60, scale: 0.96 }}
+            transition={{ type: 'spring', damping: 30, stiffness: 300, mass: 0.9 }}
             onMouseDown={(e) => e.stopPropagation()}
           >
             <div className="modal-glow" />
+            <div className="modal-drag-handle" aria-hidden="true" />
             <button className="modal-close" onClick={onClose} aria-label="Close form"><X size={16} /></button>
 
             <AnimatePresence mode="wait">
@@ -703,64 +700,144 @@ function LeadModal({ state, onClose, formContent, onSubmitted, whatsappLink }: {
                 <motion.div
                   key="success"
                   className="modal-success"
-                  initial={{ opacity: 0, scale: 0.95, y: 16 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96, y: -12 }}
-                  transition={{ type: 'spring', damping: 24, stiffness: 280 }}
+                  initial={{ opacity: 0, x: 56, scale: 0.97 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: -40, scale: 0.97 }}
+                  transition={{ type: 'spring', damping: 28, stiffness: 300, mass: 0.85 }}
                   role="status"
                   aria-live="polite"
                 >
-                  <motion.div
-                    className="success-icon-ring"
-                    initial={{ scale: 0, rotate: -30 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ type: 'spring', damping: 16, stiffness: 240, delay: 0.08 }}
-                  >
-                    <CheckCircle2 size={36} />
+                  <div className="success-header">
+                    <motion.div
+                      className="success-confetti-ring"
+                      initial={{ scale: 0, rotate: -45 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', damping: 14, stiffness: 220, delay: 0.06 }}
+                    >
+                      <motion.div
+                        className="success-inner-ring"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: 'spring', damping: 18, stiffness: 260, delay: 0.18 }}
+                      >
+                        <CheckCircle2 size={32} strokeWidth={1.8} />
+                      </motion.div>
+                    </motion.div>
+                    <motion.div className="success-header-text" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22, duration: 0.52, ease: [0.16, 1, 0.3, 1] }}>
+                      <Eyebrow>{formContent.successEyebrow || 'Enquiry Sent'}</Eyebrow>
+                      <h2 className="success-headline">{formContent.successTitle || 'Your request is in!'}</h2>
+                      <p className="success-msg">{message || "We've received your demo request and will get back to you within 24 hours."}</p>
+                    </motion.div>
+                  </div>
+
+                  <motion.div className="success-ref-card" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.48, ease: [0.16, 1, 0.3, 1] }}>
+                    <div className="success-ref-inner">
+                      <div className="success-ref-row">
+                        <span className="ref-label">{formContent.referenceLabel || 'Reference No.'}</span>
+                        <strong className="ref-code">{reference}</strong>
+                      </div>
+                      {submittedLead && (
+                        <div className="success-lead-pills">
+                          <div><span>Name</span><b>{submittedLead.name}</b></div>
+                          <div><span>Business</span><b>{submittedLead.business_type}</b></div>
+                        </div>
+                      )}
+                    </div>
                   </motion.div>
-                  <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
-                    <Eyebrow>{formContent.successEyebrow}</Eyebrow>
-                    <h2 className="success-headline">{formContent.successTitle}</h2>
-                    <p className="success-msg">{message}</p>
-                  </motion.div>
-                  <motion.div className="success-ref-card" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.26, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}>
-                    <span>{formContent.referenceLabel}</span>
-                    <strong>{reference}</strong>
-                  </motion.div>
-                  {submittedLead && (
-                    <motion.div className="success-lead-summary" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.32, duration: 0.42, ease: [0.16, 1, 0.3, 1] }}>
-                      <div><span>{formContent.summaryName}</span><b>{submittedLead.name}</b></div>
-                      <div><span>{formContent.summaryProject}</span><b>{submittedLead.business_type}</b></div>
+
+                  {formContent.successSteps && (
+                    <motion.div className="success-steps" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}>
+                      <p className="success-steps-label">{formContent.nextLabel || 'WHAT HAPPENS NEXT'}</p>
+                      <div className="success-steps-list">
+                        {formContent.successSteps.map((step: any, index: number) => (
+                          <div key={step.title} className="success-step">
+                            <div className="success-step-num">{index + 1}</div>
+                            <div className="success-step-content">
+                              <b>{step.title}</b>
+                              <em>{step.description}</em>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </motion.div>
                   )}
-                  <motion.div className="success-next" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38, duration: 0.42, ease: [0.16, 1, 0.3, 1] }}>
-                    <small>{formContent.nextLabel}</small>
-                    {formContent.successSteps.map((step: any, index: number) => (
-                      <div key={step.title}><i>{index + 1}</i><span><b>{step.title}</b><em>{step.description}</em></span></div>
-                    ))}
-                  </motion.div>
-                  <motion.div className="success-actions" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.44, duration: 0.42, ease: [0.16, 1, 0.3, 1] }}>
-                    <a className="button button--primary success-wa-cta" href={detailedWhatsAppLink} target="_blank" rel="noreferrer">
-                      <WhatsAppIcon size={17} />{formContent.whatsappCta}
+
+                  <motion.div className="success-cta-block" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.46, duration: 0.48, ease: [0.16, 1, 0.3, 1] }}>
+                    <a className="success-wa-button" href={detailedWhatsAppLink} target="_blank" rel="noreferrer">
+                      <span className="success-wa-icon"><WhatsAppIcon size={20} /></span>
+                      <span className="success-wa-text">
+                        <b>{formContent.whatsappCta || 'Continue on WhatsApp'}</b>
+                        <small>Chat with us — your details are pre-filled</small>
+                      </span>
+                      <ArrowRight size={15} className="success-wa-arrow" />
                     </a>
-                    <Button variant="secondary" onClick={onClose}>{formContent.done}</Button>
+                    <button className="success-return-button" onClick={onClose} type="button">
+                      <ArrowLeft size={14} />
+                      <span>{formContent.done || 'Return to Website'}</span>
+                    </button>
                   </motion.div>
-                  <motion.p className="success-whatsapp-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.52 }}>
-                    <WhatsAppIcon size={13} />{formContent.whatsappNote}
+
+                  <motion.p className="success-footer-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.58 }}>
+                    <ShieldCheck size={12} />
+                    {formContent.whatsappNote || 'Your information is secure and will never be shared with third parties.'}
                   </motion.p>
                 </motion.div>
               ) : (
-                <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.28 }}>
-                  <Eyebrow>{formContent.eyebrow}</Eyebrow>
-                  <h2 id="lead-title">{formContent.title}</h2>
-                  <p className="modal-intro">{formContent.subheadline}</p>
+                <motion.div
+                  key="form"
+                  initial={{ opacity: 0, x: -24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -48, scale: 0.97 }}
+                  transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <div className="modal-form-header">
+                    <Eyebrow>{formContent.eyebrow}</Eyebrow>
+                    <h2 id="lead-title">{formContent.title}</h2>
+                    <p className="modal-intro">{formContent.subheadline}</p>
+                  </div>
                   <form onSubmit={submit} noValidate>
                     <div className="form-grid">
-                      <label><span>{formContent.fields.name}</span><input value={form.name} onChange={(e) => update('name', e.target.value)} placeholder={formContent.placeholders.name} autoFocus />{fieldErrors.name && <small>{fieldErrors.name}</small>}</label>
-                      <label><span>{formContent.fields.phone}</span><input value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder={formContent.placeholders.phone} inputMode="tel" />{fieldErrors.phone && <small>{fieldErrors.phone}</small>}</label>
-                      <label><span>{formContent.fields.email}</span><input value={form.email} onChange={(e) => update('email', e.target.value)} placeholder={formContent.placeholders.email} inputMode="email" />{fieldErrors.email && <small>{fieldErrors.email}</small>}</label>
-                      <div className="form-field"><span>{formContent.fields.business}</span><div className={`custom-select ${businessOpen ? 'custom-select--open' : ''}`} ref={businessMenuRef}><button className="custom-select-trigger" type="button" onClick={() => setBusinessOpen(!businessOpen)} aria-haspopup="listbox" aria-expanded={businessOpen}><span className={form.business_type ? '' : 'placeholder'}>{form.business_type || formContent.placeholders.business}</span><ChevronDown size={15} /></button><AnimatePresence>{businessOpen && <motion.div className="custom-select-menu" role="listbox" initial={{ opacity: 0, y: -8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -5, scale: 0.98 }} transition={{ type: 'spring', damping: 22, stiffness: 300 }}>{formContent.businessTypes.map((item: string) => <button type="button" role="option" aria-selected={form.business_type === item} key={item} onClick={() => { update('business_type', item); setBusinessOpen(false); }}><span>{item}</span>{form.business_type === item && <Check size={14} />}</button>)}</motion.div>}</AnimatePresence></div>{fieldErrors.business_type && <small>{fieldErrors.business_type}</small>}</div>
-                      <label className="form-span"><span>{formContent.fields.message}</span><textarea value={form.message} onChange={(e) => update('message', e.target.value)} placeholder={formContent.placeholders.message} rows={3} /></label>
+                      <label>
+                        <span>{formContent.fields.name}</span>
+                        <input value={form.name} onChange={(e) => update('name', e.target.value)} placeholder={formContent.placeholders.name} autoFocus />
+                        {fieldErrors.name && <small>{fieldErrors.name}</small>}
+                      </label>
+                      <label>
+                        <span>{formContent.fields.phone}</span>
+                        <input value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder={formContent.placeholders.phone} inputMode="tel" />
+                        {fieldErrors.phone && <small>{fieldErrors.phone}</small>}
+                      </label>
+                      <label>
+                        <span>{formContent.fields.email}</span>
+                        <input value={form.email} onChange={(e) => update('email', e.target.value)} placeholder={formContent.placeholders.email} inputMode="email" />
+                        {fieldErrors.email && <small>{fieldErrors.email}</small>}
+                      </label>
+                      <div className="form-field">
+                        <span>{formContent.fields.business}</span>
+                        <div className={`custom-select ${businessOpen ? 'custom-select--open' : ''}`} ref={businessMenuRef}>
+                          <button className="custom-select-trigger" type="button" onClick={() => setBusinessOpen(!businessOpen)} aria-haspopup="listbox" aria-expanded={businessOpen}>
+                            <span className={form.business_type ? '' : 'placeholder'}>{form.business_type || formContent.placeholders.business}</span>
+                            <ChevronDown size={15} />
+                          </button>
+                          <AnimatePresence>
+                            {businessOpen && (
+                              <motion.div className="custom-select-menu" role="listbox" initial={{ opacity: 0, y: -8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -5, scale: 0.98 }} transition={{ type: 'spring', damping: 22, stiffness: 300 }}>
+                                {formContent.businessTypes.map((item: string) => (
+                                  <button type="button" role="option" aria-selected={form.business_type === item} key={item} onClick={() => { update('business_type', item); setBusinessOpen(false); }}>
+                                    <span>{item}</span>
+                                    {form.business_type === item && <Check size={14} />}
+                                  </button>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                        {fieldErrors.business_type && <small>{fieldErrors.business_type}</small>}
+                      </div>
+                      <label className="form-span">
+                        <span>{formContent.fields.message}</span>
+                        <textarea value={form.message} onChange={(e) => update('message', e.target.value)} placeholder={formContent.placeholders.message} rows={3} />
+                      </label>
                     </div>
                     {status === 'error' && (
                       <motion.div className="form-error" initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
@@ -944,9 +1021,23 @@ export default function App() {
   };
 
   const whatsappLink = useMemo(() => {
-    if (!content.footer) return '#';
-    return `https://wa.me/${content.footer.whatsappRaw}?text=${encodeURIComponent(content.footer.whatsappMessage)}`;
+    const defaultMsg = 'Hello Finpixel India! I visited your website and would like to know more about your services.';
+    const msg = content.footer?.whatsappMessage || defaultMsg;
+    return `https://wa.me/917004176367?text=${encodeURIComponent(msg)}`;
   }, [content.footer]);
+
+  const CONTACT_OPTIONS = [
+    { type: 'whatsapp', label: 'WhatsApp', value: '+91 70041 76367', href: 'https://wa.me/917004176367' },
+    { type: 'email', label: 'Email', value: 'finpixelindia@gmail.com', href: 'mailto:finpixelindia@gmail.com' },
+    { type: 'instagram', label: 'Instagram', value: '@finpixel.india', href: 'https://instagram.com/finpixel.india' },
+    { type: 'linkedin', label: 'LinkedIn', value: 'Ashish Singh', href: 'https://www.linkedin.com/in/ashish-singh-9212563a3' },
+    { type: 'fiverr', label: 'Fiverr', value: 'finpixelindia', href: 'https://www.fiverr.com/finpixelindia' },
+    { type: 'x', label: 'X (Twitter)', value: '@Finpixelindia', href: 'https://x.com/Finpixelindia' },
+    { type: 'linktree', label: 'Linktree', value: 'linktr.ee/finpixelindia', href: 'https://linktr.ee/finpixelindia' },
+    { type: 'notion', label: 'Portfolio', value: 'FinPixel India', href: 'https://www.notion.so/FinPixel-India-official-2dff04948ec9806ba968fdaab1925f53' },
+  ];
+
+  const contactOptions = (content.footer?.contactOptions?.length ? content.footer.contactOptions : CONTACT_OPTIONS);
 
   if (loading) return <AnimatePresence mode="wait"><motion.div key="loading" className="loading-stage" initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .28, ease: [0.16, 1, 0.3, 1] }}><LoadingScreen /></motion.div></AnimatePresence>;
   if (error || !content.hero) return (
@@ -957,7 +1048,63 @@ export default function App() {
 
   const { nav, hero, trust, about, services, comparison, pricing, industries, codeShowcase, promise, process, pageShowcase, cta, footer, leadForm, privacy, chatbot } = content;
 
-  if (window.location.pathname === '/privacy' && privacy) return <PrivacyPage privacy={privacy} theme={theme} setTheme={setTheme} />;
+  const privacyData = privacy || {
+    metaTitle: 'Privacy Policy — Finpixel India',
+    brandNote: 'Privacy Policy',
+    backLabel: 'Back to Home',
+    eyebrow: 'Legal Document',
+    title: 'Privacy Policy',
+    intro: 'At Finpixel India, we are committed to protecting your personal information and your right to privacy. This policy explains how we collect, use, and safeguard your data when you visit our website or request our services.',
+    effectiveLabel: 'Effective Date',
+    effectiveDate: '01 September 2026',
+    contentsLabel: 'Contents',
+    callout: {
+      title: 'Your Privacy Matters',
+      description: 'We collect only what is necessary, never sell your data, and you retain full ownership of your information at all times.',
+    },
+    sections: [
+      {
+        title: 'Information We Collect',
+        paragraphs: ['When you fill out our demo request form, we collect your name, phone number, email address, and business type to respond to your enquiry.', 'We may also collect basic analytics data (page views, device type) through privacy-respecting tools to improve our website.'],
+        items: ['Name and contact details provided via our forms', 'Business type and project requirements', 'Basic technical data (browser type, country) via analytics'],
+      },
+      {
+        title: 'How We Use Your Information',
+        paragraphs: ['We use your information solely to respond to your demo request, communicate about our services, and deliver your project. We do not use your data for advertising or sell it to third parties.'],
+        items: ['To respond to your enquiries and demo requests', 'To communicate project details and deliverables', 'To send important service-related updates (never spam)'],
+      },
+      {
+        title: 'Data Storage & Security',
+        paragraphs: ['Your data is stored securely using Supabase (PostgreSQL) with encrypted connections. Access is restricted to authorised personnel only. We retain enquiry data for up to 24 months unless you request deletion.'],
+      },
+      {
+        title: 'Third-Party Services',
+        paragraphs: ['We use WhatsApp Business for direct communication, and Cloudflare for hosting and DDoS protection. These services have their own privacy policies. We do not share your personal data with any other third parties.'],
+        items: ['WhatsApp Business (Meta Platforms)', 'Cloudflare (hosting & security)', 'Supabase (secure database)'],
+      },
+      {
+        title: 'Your Rights',
+        paragraphs: ['You have the right to access, correct, or delete any personal data we hold about you. To exercise these rights, email us at finpixelindia@gmail.com. We will respond within 7 business days.'],
+      },
+      {
+        title: 'Cookies',
+        paragraphs: ['Our website uses only essential cookies to remember your theme preference (light/dark mode). We do not use advertising or tracking cookies. You can clear cookies anytime via your browser settings.'],
+      },
+      {
+        title: 'Changes to This Policy',
+        paragraphs: ['We may update this policy periodically. Changes will be posted on this page with an updated effective date. Continued use of our website after changes constitutes acceptance of the revised policy.'],
+      },
+    ],
+    contact: {
+      eyebrow: 'Questions?',
+      title: 'Contact Us',
+      description: 'If you have any questions about this Privacy Policy or how we handle your data, please reach out to us directly.',
+      email: 'finpixelindia@gmail.com',
+    },
+    footer: '© 2026 Finpixel India. All rights reserved.',
+  };
+
+  if (window.location.pathname === '/privacy') return <PrivacyPage privacy={privacyData} theme={theme} setTheme={setTheme} />;
 
   return (
     <AnimatePresence mode="wait">
@@ -1106,7 +1253,7 @@ export default function App() {
             <p>{cta.subheadline}</p>
             <div className="cta-actions"><Button onClick={() => openDemo()}>{cta.primary}<ArrowRight size={18} /></Button><Button variant="darkGhost" href={whatsappLink}>{cta.secondary}<WhatsAppIcon size={18} /></Button></div>
             <div className="cta-proof">{cta.proofs.map((item: string) => <span key={item}><Check size={13} />{item}</span>)}</div>
-            <div className="contact-options-grid">{footer.contactOptions.map((option: any) => { const external = /^https?:\/\//.test(option.href); return <a href={option.href} key={option.type} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}><i><ContactIcon type={option.type} /></i><span><b>{option.label}</b><small>{option.value}</small></span><ArrowRight className="contact-arrow" size={15} /></a>; })}</div>
+            <div className="contact-options-grid">{contactOptions.map((option: any) => { const external = /^https?:\/\//.test(option.href); return <a href={option.href} key={option.type} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}><i><ContactIcon type={option.type} /></i><span><b>{option.label}</b><small>{option.value}</small></span><ArrowRight className="contact-arrow" size={15} /></a>; })}</div>
           </Reveal>
         </section>
       </main>
@@ -1115,9 +1262,19 @@ export default function App() {
         <div className="container">
           <div className="footer-main">
             <div className="footer-brand"><a className="footer-logo-link" href="#top" onClick={(event) => navigateToSection(event, '#top')}><BrandMark /></a><p>{footer.description}</p><span><span />{footer.availability}</span></div>
-            <div className="footer-links"><div><b>{footer.navLabel}</b>{footer.links.map((link: any) => <a href={link.href} key={link.label} onClick={(event) => navigateToSection(event, link.href)}>{link.label}</a>)}</div><div><b>{footer.contactLabel}</b><a href={whatsappLink} target="_blank" rel="noreferrer">{footer.whatsapp}</a><a href={`mailto:${footer.email}`}>{footer.email}</a><small>{footer.location}</small></div><div><b>{footer.socialLabel}</b><div className="socials footer-contact-icons">{footer.contactOptions.map((option: any) => { const external = /^https?:\/\//.test(option.href); return <a href={option.href} key={option.type} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined} aria-label={option.label} title={option.label}><ContactIcon type={option.type} size={16} /></a>; })}</div></div></div>
+            <div className="footer-links">
+              <div><b>{footer.navLabel}</b>{footer.links.map((link: any) => <a href={link.href} key={link.label} onClick={(event) => navigateToSection(event, link.href)}>{link.label}</a>)}</div>
+              <div><b>{footer.contactLabel || 'Contact'}</b><a href={whatsappLink} target="_blank" rel="noreferrer">+91 70041 76367</a><a href="mailto:finpixelindia@gmail.com">finpixelindia@gmail.com</a><small>{footer.location}</small></div>
+              <div><b>{footer.socialLabel || 'Connect'}</b><div className="socials footer-contact-icons">{contactOptions.map((option: any) => { const external = /^https?:\/\//.test(option.href); return <a href={option.href} key={option.type} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined} aria-label={option.label} title={option.label}><ContactIcon type={option.type} size={16} /></a>; })}</div></div>
+            </div>
           </div>
-          <div className="footer-bottom"><p>{footer.copyright}</p><div>{footer.legal.map((link: any) => <a href={link.href} key={link.label}>{link.label}</a>)}</div></div>
+          <div className="footer-bottom">
+            <p>{footer.copyright}</p>
+            <div>
+              {footer.legal?.map((link: any) => <a href={link.href} key={link.label}>{link.label}</a>)}
+              <a href="/privacy">Privacy Policy</a>
+            </div>
+          </div>
         </div>
       </footer>
 
