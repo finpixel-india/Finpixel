@@ -492,6 +492,203 @@ function PageFlashcard({ page, index, active, onToggle }: { page: any; index: nu
   );
 }
 
+function PreciseWorkCard({ item, index }: { item: any; index: number }) {
+  const [active, setActive] = useState(false);
+  const isSocial = Boolean(item.service?.toLowerCase().includes('social'));
+
+  const renderVisual = (isRevealed: boolean) => {
+    switch (index) {
+      case 0:
+        return isRevealed ? (
+          <div className="growth-preview-mockup growth-preview--success">
+            <div className="growth-metric-stat">
+              <span className="growth-pulse-dot" />
+              <strong>+480% Viral Reach</strong>
+            </div>
+            <div className="growth-mini-bars">
+              <span style={{ height: '35%' }} />
+              <span style={{ height: '55%' }} />
+              <span style={{ height: '75%' }} />
+              <span style={{ height: '95%' }} />
+            </div>
+            <small>🔥 34 Direct Leads Generated</small>
+          </div>
+        ) : (
+          <div className="growth-preview-mockup growth-preview--warning">
+            <div className="growth-post-ghost">
+              <div className="ghost-avatar" />
+              <div className="ghost-lines">
+                <span style={{ width: '75%' }} />
+                <span style={{ width: '45%' }} />
+              </div>
+            </div>
+            <small>🦗 0 Likes · 0 Comments · Zero Traffic</small>
+          </div>
+        );
+      case 1:
+        return isRevealed ? (
+          <div className="growth-preview-mockup growth-preview--success">
+            <div className="growth-brand-swatch">
+              <span className="swatch-accent" />
+              <span>Swiss Grid & Luxury Typography</span>
+            </div>
+            <small>✨ High-End Digital Showroom Presence</small>
+          </div>
+        ) : (
+          <div className="growth-preview-mockup growth-preview--warning">
+            <div className="growth-bad-design">
+              <span className="bad-font">CANVA TEMPLATE #492</span>
+            </div>
+            <small>⚠️ Stock clipart destroys buyer trust</small>
+          </div>
+        );
+      case 2:
+        return isRevealed ? (
+          <div className="growth-preview-mockup growth-preview--success">
+            <div className="growth-pipeline">
+              <span>Visitor</span>
+              <ArrowRight size={11} />
+              <span>WhatsApp</span>
+              <ArrowRight size={11} />
+              <strong>₹ Bank Lead</strong>
+            </div>
+            <small>🎯 Focus on deposits, not vanity hearts</small>
+          </div>
+        ) : (
+          <div className="growth-preview-mockup growth-preview--warning">
+            <div className="growth-vanity-hearts">
+              <span>❤️ 1,200 Hearts</span>
+              <span className="vanity-zero">₹0 Inflow</span>
+            </div>
+            <small>❌ Vanity likes do not pay business bills</small>
+          </div>
+        );
+      case 3:
+        return isRevealed ? (
+          <div className="growth-preview-mockup growth-preview--success">
+            <div className="growth-node-chain">
+              <span className="node-pill">Form</span>
+              <i>⚡</i>
+              <span className="node-pill">CRM</span>
+              <i>⚡</i>
+              <span className="node-pill">WhatsApp</span>
+            </div>
+            <small>🤖 100% Invisible Robots · Zero Manual Entry</small>
+          </div>
+        ) : (
+          <div className="growth-preview-mockup growth-preview--warning">
+            <div className="growth-sheet-grid">
+              <span>#REF!</span>
+              <span style={{ opacity: 0.6 }}>Copy..</span>
+              <span style={{ color: '#ef4444' }}>Paste Error</span>
+            </div>
+            <small>⚠️ Hours wasted copy-pasting tables</small>
+          </div>
+        );
+      case 4:
+        return isRevealed ? (
+          <div className="growth-preview-mockup growth-preview--success">
+            <div className="growth-ai-reply">
+              <span className="bot-bubble">AI: Demo confirmed for 4 PM!</span>
+              <small>⚡ Response in 4 seconds · 24/7/365</small>
+            </div>
+          </div>
+        ) : (
+          <div className="growth-preview-mockup growth-preview--warning">
+            <div className="growth-cold-timer">
+              <span>⏳ 6 Hours Unanswered</span>
+            </div>
+            <small>❄️ Client already went to your competitor</small>
+          </div>
+        );
+      default:
+        return isRevealed ? (
+          <div className="growth-preview-mockup growth-preview--success">
+            <div className="growth-verified-seal">
+              <CheckCircle2 size={14} />
+              <span>Automated Auditing · 0 Mistakes</span>
+            </div>
+            <small>🛡️ Error-free invoices & instant records</small>
+          </div>
+        ) : (
+          <div className="growth-preview-mockup growth-preview--warning">
+            <div className="growth-error-stamp">
+              <span>Typo in Invoice #108</span>
+            </div>
+            <small>⚠️ Costly human miscalculations</small>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div
+      className={`growth-card ${active ? 'growth-card--active' : ''}`}
+      onClick={() => setActive((prev) => !prev)}
+      onMouseLeave={() => setActive(false)}
+      role="button"
+      tabIndex={0}
+      aria-label={`${item.trapTitle} - Click or hover to reveal solution`}
+    >
+      <div className="growth-card-accent" />
+
+      {/* Front: The Trap / Problem */}
+      <div className="growth-card-side growth-card-front">
+        <div className="growth-card-top">
+          <span className={`growth-tag ${isSocial ? 'growth-tag--social' : 'growth-tag--tech'}`}>
+            {isSocial ? <Instagram size={13} /> : <Bot size={13} />}
+            {item.service}
+          </span>
+          <span className="growth-num">0{index + 1}</span>
+        </div>
+
+        <div className="growth-visual-slot">
+          {renderVisual(false)}
+        </div>
+
+        <span className="growth-trap-pill">
+          <CircleX size={12} />
+          {item.trapLabel}
+        </span>
+        <h4 className="growth-trap-title">{item.trapTitle}</h4>
+        <blockquote className="growth-quote">{item.quote}</blockquote>
+
+        <div className="growth-reveal-cta">
+          <span>Reveal Solution</span>
+          <ArrowRight size={13} />
+        </div>
+      </div>
+
+      {/* Back / Hover: The Solution */}
+      <div className="growth-card-side growth-card-back">
+        <div className="growth-card-top">
+          <span className="growth-solution-badge">
+            <Sparkles size={13} />
+            {item.solutionLabel || 'The Solution'}
+          </span>
+          <span className="growth-num">0{index + 1}</span>
+        </div>
+
+        <div className="growth-visual-slot">
+          {renderVisual(true)}
+        </div>
+
+        <span className="growth-solution-kicker">Engineered Fix</span>
+        <h4 className="growth-solution-title">{item.solutionTitle}</h4>
+        <p className="growth-solution-desc">{item.solution}</p>
+
+        <div className="growth-solution-footer">
+          <span className="growth-verified-tag">
+            <CheckCircle2 size={12} />
+            Finpixel Guaranteed
+          </span>
+          <span className="growth-tap-hint">Tap or move away to close</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AboutSection({ about }: { about: any }) {
   const whoParagraphs: string[] = about?.who?.paragraphs || [];
   const principles: any[] = [about?.vision, about?.goal].filter(Boolean);
@@ -567,22 +764,8 @@ function AboutSection({ about }: { about: any }) {
         </Reveal>
         <div className="growth-grid">
           {otherWorkItems.map((item: any, index: number) => (
-            <Reveal className="growth-card" key={item.trapTitle || index} delay={(index % 3) * .05}>
-              <div className="growth-card-top">
-                <span>{item.service}</span>
-                <i>0{index + 1}</i>
-              </div>
-              <small>{item.trapLabel}</small>
-              <h4>{item.trapTitle}</h4>
-              <blockquote>{item.quote}</blockquote>
-              <div className="growth-solution">
-                <div className="growth-solution-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                  <small style={{ margin: 0 }}>{item.solutionLabel}</small>
-                  <span className="growth-reveal-hint" style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: .75 }}>Click / Hover to reveal</span>
-                </div>
-                <h5>{item.solutionTitle}</h5>
-                <p>{item.solution}</p>
-              </div>
+            <Reveal key={item.trapTitle || index} delay={(index % 3) * .05}>
+              <PreciseWorkCard item={item} index={index} />
             </Reveal>
           ))}
         </div>
@@ -1351,7 +1534,7 @@ export default function App() {
     <motion.div key="site" className="site-shell" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .38, ease: [0.16, 1, 0.3, 1] }}>
       <header className={`site-nav ${scrolled ? 'site-nav--scrolled' : ''}`}>
         <div className="nav-inner">
-          <a className="nav-brand" href="#top" onClick={(event) => navigateToSection(event, '#top')}><BrandMark /><small>{nav.tagline}</small></a>
+          <a className="nav-brand" href="#top" onClick={(event) => navigateToSection(event, '#top')}><BrandMark /><small>{nav?.tagline || 'Defining every pixel with precision'}</small></a>
           <nav className="desktop-links" aria-label="Primary navigation">
             {nav.links.map((link: any) => <a href={link.href} key={link.label} onClick={(event) => navigateToSection(event, link.href)}>{link.label}</a>)}
           </nav>
@@ -1445,12 +1628,61 @@ export default function App() {
           </div>
         </section>}
 
-        {process && <section className="process-section section">
-          <div className="container">
-            <Reveal className="section-heading centered"><Eyebrow>{process.eyebrow}</Eyebrow><h2>{process.headline}</h2><p>{process.subheadline}</p></Reveal>
-            <div className="process-steps">{process.steps.map((step: any, index: number) => <Reveal className="process-step" key={step.title} delay={index * .08}><div className="step-line"><span /><i>0{index + 1}</i></div><h3>{step.title}</h3><p>{step.description}</p></Reveal>)}</div>
-          </div>
-        </section>}
+        {process && (
+          <section className="process-section section" id="process">
+            <div className="container">
+              <Reveal className="section-heading centered">
+                <Eyebrow>{process.eyebrow || 'How It Works'}</Eyebrow>
+                <h2>{process.headline || 'From Idea to Live Site'}</h2>
+                <p>{process.subheadline || 'A simple, transparent process with no surprises.'}</p>
+              </Reveal>
+
+              <div className="process-container-wrap">
+                <div className="process-grid-modern">
+                  {process.steps.map((step: any, index: number) => {
+                    const stepIcons = [MessageCircle, Code2, RotateCcw, Rocket];
+                    const StepIcon = stepIcons[index % stepIcons.length];
+                    return (
+                      <Reveal className="process-card-modern" key={step.title || index} delay={index * 0.08}>
+                        <div className="process-card-top-bar">
+                          <span className="process-step-badge">
+                            <i>0{index + 1}</i>
+                            <span className="badge-dot" />
+                          </span>
+                          <span className="process-timing-tag">{step.timing || `Phase 0${index + 1}`}</span>
+                        </div>
+
+                        <div className="process-icon-box">
+                          <StepIcon size={22} strokeWidth={1.75} />
+                        </div>
+
+                        <h3 className="process-step-title">{step.title}</h3>
+                        <p className="process-step-desc">{step.description}</p>
+
+                        {step.deliverable && (
+                          <div className="process-deliverable-pill">
+                            <CheckCircle2 size={13} />
+                            <span>{step.deliverable}</span>
+                          </div>
+                        )}
+                        {step.highlight && (
+                          <div className="process-highlight-tag">
+                            <span>{step.highlight}</span>
+                          </div>
+                        )}
+                      </Reveal>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <Reveal className="process-footer-trust">
+                <ShieldCheck size={16} />
+                <span>Zero advance deposit. We build your working prototype first — you pay only when you approve.</span>
+              </Reveal>
+            </div>
+          </section>
+        )}
 
         {pageShowcase && Array.isArray(pageShowcase.items) && <section className="pages-section section">
           <div className="container">
@@ -1460,22 +1692,86 @@ export default function App() {
           </div>
         </section>}
 
-        {pricing && <section className="pricing-section section" id="pricing">
-          <div className="container">
-            <Reveal className="section-heading centered"><Eyebrow>{pricing.eyebrow}</Eyebrow><h2>{pricing.headline}</h2><p>{pricing.subheadline}</p></Reveal>
-            <div className="pricing-grid">
-              {pricing.plans.map((plan: any, index: number) => <Reveal className={`pricing-card ${plan.featured ? 'pricing-card--featured' : ''}`} key={plan.name} delay={index * .07}>
-                {plan.featured && <span className="pricing-featured-badge">{pricing.popularBadge}</span>}
-                <div className="pricing-card-head"><span>{plan.subtitle}</span><h3>{plan.name}</h3></div>
-                <div className="pricing-price-wrap"><div className="price">{plan.period ? <small>{plan.currency}</small> : ''}<b>{plan.price}</b>{plan.period ? <span>/{plan.period}</span> : ''}</div><p>{plan.description}</p></div>
-                <div className="pricing-rule" />
-                <ul>{plan.features.map((feature: string) => <li key={feature}><Check size={15} />{feature}</li>)}</ul>
-                <Button variant={plan.featured ? 'primary' : 'secondary'} onClick={() => openDemo(plan.interest)}>{plan.cta}<ArrowRight size={16} /></Button>
-              </Reveal>)}
+        {pricing && (
+          <section className="pricing-section section" id="pricing">
+            <div className="pricing-orb pricing-orb--one" />
+            <div className="pricing-orb pricing-orb--two" />
+            <div className="container pricing-inner">
+              <Reveal className="section-heading centered">
+                <Eyebrow>{pricing.eyebrow || 'Simple Pricing'}</Eyebrow>
+                <h2>{pricing.headline || 'Plans for Every Budget'}</h2>
+                <p>{pricing.subheadline || 'Transparent pricing. No hidden fees. Final cost based on your scope.'}</p>
+              </Reveal>
+
+              <div className="pricing-grid-modern">
+                {pricing.plans.map((plan: any, index: number) => {
+                  const isFeatured = Boolean(plan.featured);
+                  return (
+                    <Reveal
+                      className={`pricing-card-modern ${isFeatured ? 'pricing-card-modern--featured' : ''}`}
+                      key={plan.name}
+                      delay={index * 0.07}
+                    >
+                      {isFeatured && (
+                        <div className="pricing-featured-ribbon">
+                          <Sparkles size={13} />
+                          <span>{pricing.popularBadge || 'Most Popular · Best Value'}</span>
+                        </div>
+                      )}
+
+                      <div className="pricing-card-header">
+                        <span className="pricing-card-subtitle">{plan.subtitle}</span>
+                        {plan.idealFor && <span className="pricing-ideal-tag">{plan.idealFor}</span>}
+                      </div>
+
+                      <h3 className="pricing-plan-title">{plan.name}</h3>
+                      <p className="pricing-plan-summary">{plan.description}</p>
+
+                      <div className="pricing-price-display">
+                        <div className="price-number-wrap">
+                          <small className="price-currency">{plan.currency || '₹'}</small>
+                          <strong className="price-val">{plan.price}</strong>
+                          <span className="price-period">/{plan.period || 'onwards'}</span>
+                        </div>
+                        <span className="price-guarantee-tag">Pay after demo approval</span>
+                      </div>
+
+                      <div className="pricing-divider" />
+
+                      <ul className="pricing-feature-list">
+                        {plan.features.map((feature: string) => (
+                          <li key={feature}>
+                            <Check size={15} />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <Button
+                        variant={isFeatured ? 'primary' : 'secondary'}
+                        className="pricing-action-btn"
+                        onClick={() => openDemo(plan.interest || plan.name)}
+                      >
+                        {plan.cta || 'Request Free Demo'}
+                        <ArrowRight size={16} />
+                      </Button>
+
+                      <div className="pricing-trust-stamp">
+                        <ShieldCheck size={13} />
+                        <span>Demo First · 100% Code Ownership</span>
+                      </div>
+                    </Reveal>
+                  );
+                })}
+              </div>
+
+              <Reveal className="pricing-note">
+                <ShieldCheck size={16} />
+                <span>{pricing.note || 'All plans include Demo-First guarantee. Pay only after you approve.'}</span>
+              </Reveal>
             </div>
-            <Reveal className="pricing-note"><ShieldCheck size={16} /><span>{pricing.note}</span></Reveal>
-          </div>
-        </section>}
+          </section>
+        )}
 
         {aboutData && <AboutSection about={aboutData} />}
 

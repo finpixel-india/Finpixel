@@ -2,7 +2,7 @@ const STATIC_CONTENT = [
   {
     id: 1, section: "nav", sort_order: 1,
     content: {
-      tagline: "Premium Hand-Coded Websites",
+      tagline: "Defining every pixel with precision",
       cta: "Get Free Demo",
       links: [
         { label: "Services", href: "#services" },
